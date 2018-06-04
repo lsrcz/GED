@@ -68,9 +68,6 @@ void solveLSAP(double *mat, int *b, int size) {
         }
     }
     memset(b, 0, sizeof(int) * size * size);
-    for (int i = 0; i < 3; ++i) {
-        std::cout << match[i] << std::endl;
-    }
     for (int i = 0; i < size; ++i) {
         b[i * size + match[i]] = 1;
     }
