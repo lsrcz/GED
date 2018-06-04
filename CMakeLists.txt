@@ -9,5 +9,6 @@ elseif (CMAKE_BUILD_TYPE MATCHES Release)
     set(CMAKE_CXX_FLAGS "-march=native -frename-registers -funroll-loops -finline-functions -O3")
 endif ()
 
-add_executable(GED src/hello-world.cpp)
+include_directories(include)
+add_executable(GED src/hello-world.cpp include/lsap.h src/lsap.cpp include/lsap.h)
 
