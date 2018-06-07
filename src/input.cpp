@@ -1,32 +1,26 @@
+#include "input.hpp"
+#include <string>
 #include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <map>
+using namespace std;
 #define MAX_NODE 75
-int node[2][MAX_NODE], g[2][MAX_NODE][MAX_NODE];
-int node_cnt[2]={0};
-const char ele[80][3]={
-"H","He","Li","Be","B","C","N","O",
-"F","Ne","Na","Mg","Al","Si","P","S",
-"Cl","Ar","K","Ca","Sc","Ti","V","Cr",
-"Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge",
-"As","Se","Br","Kr","Rb","Sr","Y","Zr",
-"Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd",
-"In","Sn","Sb","Te","I","Xe","Cs","Ba",
-"La","Ce","Pr","Nd","Pm","Sm","Eu","Gd",
-"Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf",
-"Ta","W","Re","Os","Ir","Pt","Au","Hg",
-};
+map <string, int> ele;
+int ele_cnt=0;
 int match_ele(const char atom[]){
-	printf("%s\n", atom);
-	for (int i=0; i<80; i++)
-		if (atom[0]==ele[i][0]&&atom[1]==ele[i][1])
-			return i;
-	printf("Element not listed!\n");
-	return -1;
+	string tmp=atom;
+	//cout<<tmp<<endl;
+	map <string, int>::iterator it=ele.find(tmp);
+	if (it!=ele.end())
+		return it->second;
+	ele[tmp]=++ele_cnt;
+	return ele_cnt;
 }
+
 void s_strncpy(char *dst, char *src, int len){strncpy(dst, src, len); dst[len]='\0';}
 
-void read_gxl(char filename[], int graph)
+void read_gxl(char filename[], int g[MAX_NODE][MAX_NODE], int* node, int &node_cnt)
 {
 	bool flag=false;
 	FILE *pfile;
@@ -34,6 +28,8 @@ void read_gxl(char filename[], int graph)
 	char *pstr, *tmp;
 	int cnt=0, a, b;
 
+	for (int i=0; i<MAX_NODE; i++)
+		memset(g[i], 0, sizeof(g[i]));
 	pfile=fopen(filename, "r");
 	if (pfile == NULL) {perror ("Error opening file");	return;}
 	while (fgets(buffer, 200, pfile), buffer[1]!='n');
@@ -47,7 +43,7 @@ void read_gxl(char filename[], int graph)
 			pstr=strchr(pstr+1, '>');
 			tmp=strchr(pstr, '<');
 			s_strncpy(str1, pstr+1, tmp-pstr-1);
-			node[graph][cnt++]=match_ele(str1);	//element
+			node[cnt++]=match_ele(str1);	//element
 		}
 		else{
 			fgets(buffer, 200, pfile);	//element
@@ -55,11 +51,11 @@ void read_gxl(char filename[], int graph)
 			pstr=strchr(pstr+1, '>');
 			tmp=strchr(pstr, '<');
 			s_strncpy(str1, pstr+1, tmp-pstr-1);
-			node[graph][cnt++]=atoi(str1);
+			node[cnt++]=atoi(str1);
 			fgets(buffer, 200, pfile);
 		}
 	}while (fgets(buffer, 200, pfile), buffer[1]=='n');
-	node_cnt[graph]=cnt;
+	node_cnt=cnt;
 
 	do{
 		if (flag){
@@ -74,7 +70,7 @@ void read_gxl(char filename[], int graph)
 
 			pstr=strchr(tmp+2, '>');
 			pstr=strchr(pstr+1, '>');
-			g[graph][a][b]=g[graph][b][a]=pstr[1]-'0';
+			g[a][b]=g[b][a]=pstr[1]-'0';
 		}
 		else{
 			pstr=strchr(buffer, '_');
@@ -89,23 +85,13 @@ void read_gxl(char filename[], int graph)
 			fgets(buffer, 200, pfile);
 			pstr=strchr(buffer, '>');
 			pstr=strchr(pstr+1, '>');
-			g[graph][a][b]=g[graph][b][a]=pstr[1]-'0';
+			g[a][b]=g[b][a]=pstr[1]-'0';
 			fgets(buffer, 200, pfile);
 		}
 	}while (fgets(buffer, 200, pfile), buffer[1]=='e');
-	
 }
 
-int main()
-{
-	read_gxl("g2.gxl", 0);
-	for (int i=0; i<node_cnt[0]; i++)
-		printf("%d", node[0][i]);
-	printf("\n\n");
-	for(int i=0; i<node_cnt[0]; i++)
-	{
-		for (int j=0; j<node_cnt[0]; j++)
-			printf("%d", g[0][i][j]);
-		printf("\n");
-	}
+void initmat(char filename1[], int mat1[MAX_NODE][MAX_NODE], int* node1, int &node_cnt1, char filename2[], int mat2[MAX_NODE][MAX_NODE], int* node2, int &node_cnt2){
+    read_gxl(filename1, mat1, node1, node_cnt1);
+    read_gxl(filename2, mat2, node2, node_cnt2);
 }
