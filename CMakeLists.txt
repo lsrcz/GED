@@ -10,5 +10,5 @@ elseif (CMAKE_BUILD_TYPE MATCHES Release)
 endif ()
 
 include_directories(include)
-add_executable(GED src/hello-world.cpp include/lsap.h src/lsap.cpp include/lsap.h)
+add_executable(GED src/main.cpp src/input.cpp src/lsap.cpp)
 
