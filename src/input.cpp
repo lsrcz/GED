@@ -20,7 +20,7 @@ int match_ele(const char atom[]){
 
 void s_strncpy(char *dst, char *src, int len){strncpy(dst, src, len); dst[len]='\0';}
 
-void read_gxl(char filename[], int g[][MAX_NODE], int* node, int &node_cnt)
+void read_gxl(char filename[], int g[MAX_NODE][MAX_NODE], int* node, int &node_cnt)
 {
 	bool flag=false;
 	FILE *pfile;
@@ -28,6 +28,8 @@ void read_gxl(char filename[], int g[][MAX_NODE], int* node, int &node_cnt)
 	char *pstr, *tmp;
 	int cnt=0, a, b;
 
+	for (int i=0; i<MAX_NODE; i++)
+		memset(g[i], 0, sizeof(g[i]));
 	pfile=fopen(filename, "r");
 	if (pfile == NULL) {perror ("Error opening file");	return;}
 	while (fgets(buffer, 200, pfile), buffer[1]!='n');
