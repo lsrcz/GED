@@ -17,12 +17,14 @@ const char ele[80][3]={
 "Ta","W","Re","Os","Ir","Pt","Au","Hg",
 };
 int match_ele(const char atom[]){
+	printf("%s\n", atom);
 	for (int i=0; i<80; i++)
 		if (atom[0]==ele[i][0]&&atom[1]==ele[i][1])
 			return i;
 	printf("Element not listed!\n");
 	return -1;
 }
+void s_strncpy(char *dst, char *src, int len){strncpy(dst, src, len); dst[len]='\0';}
 
 void read_gxl(char filename[], int graph)
 {
@@ -44,7 +46,7 @@ void read_gxl(char filename[], int graph)
 			pstr=strchr(pstr+1, '>');
 			pstr=strchr(pstr+1, '>');
 			tmp=strchr(pstr, '<');
-			strncpy(str1, pstr+1, tmp-pstr-1);
+			s_strncpy(str1, pstr+1, tmp-pstr-1);
 			node[graph][cnt++]=match_ele(str1);	//element
 		}
 		else{
@@ -52,7 +54,7 @@ void read_gxl(char filename[], int graph)
 			pstr=strchr(buffer, '>');
 			pstr=strchr(pstr+1, '>');
 			tmp=strchr(pstr, '<');
-			strncpy(str1, pstr+1, tmp-pstr-1);
+			s_strncpy(str1, pstr+1, tmp-pstr-1);
 			node[graph][cnt++]=atoi(str1);
 			fgets(buffer, 200, pfile);
 		}
@@ -63,11 +65,11 @@ void read_gxl(char filename[], int graph)
 		if (flag){
 			pstr=strchr(buffer, '\"');
 			tmp=strchr(pstr+1, '\"');
-			strncpy(str1, pstr+1, tmp-pstr-1);
+			s_strncpy(str1, pstr+1, tmp-pstr-1);
 			a=atoi(str1)-1;
 			pstr=strchr(tmp+1, '\"');
 			tmp=strchr(pstr+1, '\"');
-			strncpy(str1, pstr+1, tmp-pstr-1);
+			s_strncpy(str1, pstr+1, tmp-pstr-1);
 			b=atoi(str1)-1;
 
 			pstr=strchr(tmp+2, '>');
@@ -77,11 +79,11 @@ void read_gxl(char filename[], int graph)
 		else{
 			pstr=strchr(buffer, '_');
 			tmp=strchr(pstr+1, '\"');
-			strncpy(str1, pstr+1, tmp-pstr-1);
+			s_strncpy(str1, pstr+1, tmp-pstr-1);
 			a=atoi(str1)-1;
 			pstr=strchr(tmp+1, '_');
 			tmp=strchr(pstr+1, '\"');
-			strncpy(str1, pstr+1, tmp-pstr-1);
+			s_strncpy(str1, pstr+1, tmp-pstr-1);
 			b=atoi(str1)-1;
 
 			fgets(buffer, 200, pfile);
