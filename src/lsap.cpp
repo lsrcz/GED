@@ -23,14 +23,14 @@ bool Hungary(double *mat, int size, int u)
     for (int i = 0; i < size; ++i) {
         if (visity[i])
             continue;
-        if (lx[u] + ly[i] == mat[u * size + i]) {
+        if (lx[u] + ly[i] == -mat[u * size + i]) {
             visity[i] = true;
             if (match[i] == -1 || Hungary(mat, size, match[i])) {
                 match[i] = u;
                 return true;
             }
         } else
-            slack[i] = std::min(slack[i], lx[u] + ly[i] - mat[u * size + i]);
+            slack[i] = std::min(slack[i], lx[u] + ly[i] + mat[u * size + i]);
     }
     return false;
 }
@@ -42,7 +42,7 @@ void solveLSAP(double *mat, int *b, int size) {
     memset(match, -1, sizeof(match));
     for (int i = 0; i < size; ++i)
         for (int j = 0; j < size; ++j)
-            lx[i] = std::max(lx[i], mat[i * size + j]);
+            lx[i] = std::max(lx[i], -mat[i * size + j]);
     for (int i = 0; i < size; ++i) {
         memset(slack, 0x7f, sizeof(slack));
         while (true) {
@@ -67,8 +67,9 @@ void solveLSAP(double *mat, int *b, int size) {
             }
         }
     }
+    double ans;
     memset(b, 0, sizeof(int) * size * size);
     for (int i = 0; i < size; ++i) {
-        b[i * size + match[i]] = 1;
+        b[match[i] * size + i] = 1;
     }
 }
