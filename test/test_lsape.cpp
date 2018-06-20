@@ -147,12 +147,17 @@ bool auto_compare_lsap_lsape(int n, int m) {
     double dotlsape = dot(clsape, blsape, (n + 1) * (m + 1));
     double dotlsap = dot(clsap, blsap, (n + m) * (n + m));
     cout << dotlsap << " " << dotlsape << endl;
+    delete[] blsap;
+    delete[] blsape;
+    delete[] clsap;
+    delete[] clsape;
     return fabs(dotlsap - dotlsape) / dotlsap <= 1e-9;
 }
 
 int main() {
     srand(time(0));
-    for (int i = 0; i < 100; ++i) {
-        assert(auto_compare_lsap_lsape(70, 70));
+    for (int i = 0; i < 10000; ++i) {
+        cout << i << endl;
+        assert(auto_compare_lsap_lsape(71, 71));
     }
 }
