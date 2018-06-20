@@ -18,6 +18,12 @@ void vecMulMat(double * __restrict b, double * __restrict A, double * __restrict
 
 double dot(double * __restrict a, double * __restrict b, int len);
 
+double dot(int * __restrict a, double * __restrict b, int len);
+
+double dot(double * __restrict a, int * __restrict b, int len);
+
+int dot(int * __restrict a, int * __restrict b, int len);
+
 #include "matop.inl"
 
 #endif //GED_MATOP_H

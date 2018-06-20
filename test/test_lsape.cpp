@@ -5,6 +5,8 @@
 #include "lsap.h"
 #include "matop.h"
 #include <iostream>
+#include <cstdlib>
+#include <cmath>
 
 using std::cout;
 using std::endl;
@@ -34,9 +36,7 @@ void test_augment() {
     int j = 0;
 }
 
-int main() {
-    test_augment();
-
+void test_one() {
     double c[] = {
             7, 11, 9, 8, 9, 10,
             2, 8, 8, 5, 7, 3,
@@ -98,5 +98,61 @@ int main() {
     }
     cout << endl;
     int j = 0;
+    int b1[1000];
+    double b2[1000];
+    solveLSAPE(c, n, m, b1);
+    for (int i = 0; i < 50; ++i) {
+        cout << b1[i] << endl;
+        b2[i] = b1[i];
+    }
+    cout << "dot" << dot(c, b2, 30) << endl;
+}
 
+bool auto_compare_lsap_lsape(int n, int m) {
+    auto clsape = new double[(n + 1) * (m + 1)];
+    auto clsap = new double[(n + m) * (n + m)];
+    memset(clsape, 0, sizeof(double) * (n + 1) * (m + 1));
+    memset(clsap, 0, sizeof(double) * (n + m) * (n + m));
+    for (int i = 0; i < n; ++i) {
+        for (int j = m; j < m + n; ++j) {
+            clsap[i * (m + n) + j] = 1e300;
+        }
+    }
+    for (int i = n; i < m + n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            clsap[i * (m + n) + j] = 1e300;
+        }
+    }
+    for (int i = 0; i <= n; ++i) {
+        for (int j = 0; j <= m; ++j) {
+            if (i != n) {
+                if (j != m) {
+                    clsape[i * (m + 1) + j] = clsap[i * (m + n) + j] = rand();
+                } else {
+                    clsape[i * (m + 1) + j] = clsap[i * (m + n) + m + i] = rand();
+                }
+            } else {
+                if (j != m) {
+                    clsape[i * (m + 1) + j] = clsap[(m + j) * (m + n) + j] = rand();
+                } else {
+
+                }
+            }
+        }
+    }
+    auto blsape = new int[(n + 1) * (m + 1)];
+    auto blsap = new int[(n + m) * (n + m)];
+    solveLSAP(clsap, blsap, n + m);
+    solveLSAPE(clsape, n, m, blsape);
+    double dotlsape = dot(clsape, blsape, (n + 1) * (m + 1));
+    double dotlsap = dot(clsap, blsap, (n + m) * (n + m));
+    cout << dotlsap << " " << dotlsape << endl;
+    return fabs(dotlsap - dotlsape) / dotlsap <= 1e-9;
+}
+
+int main() {
+    srand(time(0));
+    for (int i = 0; i < 100; ++i) {
+        assert(auto_compare_lsap_lsape(70, 70));
+    }
 }

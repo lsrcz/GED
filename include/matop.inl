@@ -30,3 +30,27 @@ double dot(double * __restrict a, double * __restrict b, int len) {
     }
     return ret;
 }
+
+double dot(int * __restrict a, double * __restrict b, int len) {
+    double ret = 0;
+    for (int i = 0; i < len; ++i) {
+        ret += a[i] * b[i];
+    }
+    return ret;
+}
+
+double dot(double * __restrict a, int * __restrict b, int len) {
+    double ret = 0;
+    for (int i = 0; i < len; ++i) {
+        ret += a[i] * b[i];
+    }
+    return ret;
+}
+
+int dot(int * __restrict a, int * __restrict b, int len) {
+    int ret = 0;
+    for (int i = 0; i < len; ++i) {
+        ret += a[i] * b[i];
+    }
+    return ret;
+}

@@ -25,4 +25,7 @@ augmentRow(int k, double *cost, const int *rho, const int *varrho,
 void
 hungarianLSAPE(double *cost, int n, int m, int *rho, int *varrho, double *u, double *v);
 
+void
+solveLSAPE(double *cost, int n, int m, int *b);
+
 #endif //GED_LSAPE_H

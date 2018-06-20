@@ -322,3 +322,26 @@ hungarianLSAPE(double *cost, int n, int m, int *rho, int *varrho, double *u, dou
         delete[] pred;
     }
 }
+
+void
+solveLSAPE(double *cost, int n, int m, int *b) {
+    auto rho = new int[n];
+    auto varrho = new int[m];
+    auto u = new double[n + 1];
+    auto v = new double[m + 1];
+    hungarianLSAPE(cost, n, m, rho, varrho, u, v);
+    memset(b, 0, sizeof(int) * (n + 1) * (m + 1));
+    for (int i = 0; i < n; ++i) {
+        b[i * (m + 1) + rho[i]] = 1;
+    }
+    int basepos = n * (m + 1);
+    for (int j = 0; j < m; ++j) {
+        if (varrho[j] == n) {
+            b[basepos + j] = 1;
+        }
+    }
+    delete[] v;
+    delete[] u;
+    delete[] varrho;
+    delete[] rho;
+}
