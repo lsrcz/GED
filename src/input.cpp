@@ -6,9 +6,11 @@
 #include <map>
 using namespace std;
 #define MAX_NODE 75
-map <string, int> ele;
-int ele_cnt=0;
-int match_ele(const char atom[]){
+
+map <string, int> chemgraph::ele;
+int chemgraph::ele_cnt=0;
+
+int chemgraph::match_ele(const char atom[]){
 	string tmp=atom;
 	//cout<<tmp<<endl;
 	map <string, int>::iterator it=ele.find(tmp);
@@ -20,7 +22,7 @@ int match_ele(const char atom[]){
 
 void s_strncpy(char *dst, char *src, int len){strncpy(dst, src, len); dst[len]='\0';}
 
-void read_gxl(char filename[], int g[MAX_NODE][MAX_NODE], int* node, int &node_cnt)
+chemgraph::chemgraph(char filename[])
 {
 	bool flag=false;
 	FILE *pfile;
@@ -30,6 +32,7 @@ void read_gxl(char filename[], int g[MAX_NODE][MAX_NODE], int* node, int &node_c
 
 	for (int i=0; i<MAX_NODE; i++)
 		memset(g[i], 0, sizeof(g[i]));
+	
 	pfile=fopen(filename, "r");
 	if (pfile == NULL) {perror ("Error opening file");	return;}
 	while (fgets(buffer, 200, pfile), buffer[1]!='n');
@@ -91,7 +94,16 @@ void read_gxl(char filename[], int g[MAX_NODE][MAX_NODE], int* node, int &node_c
 	}while (fgets(buffer, 200, pfile), buffer[1]=='e');
 }
 
-void initmat(char filename1[], int mat1[MAX_NODE][MAX_NODE], int* node1, int &node_cnt1, char filename2[], int mat2[MAX_NODE][MAX_NODE], int* node2, int &node_cnt2){
-    read_gxl(filename1, mat1, node1, node_cnt1);
-    read_gxl(filename2, mat2, node2, node_cnt2);
+void chemgraph::printchem(){
+	printf("nodes and there tags: \n");
+	for (int i=0; i<node_cnt; i++)
+		printf("%d ", node[i]);
+	printf("\n");
+	printf("edges: \n");
+	for (int i=0; i<node_cnt; i++){
+		for (int j=0; j<node_cnt; j++)
+			printf("%d ", g[i][j]);
+		printf("\n");
+	}
+	printf("\n");
 }

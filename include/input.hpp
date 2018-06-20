@@ -9,9 +9,28 @@
 #define input_hpp
 
 #include <stdio.h>
+#include <string>
+#include <map>
+using std::map;
+using std::string;
 
 #define MAX_NODE 75
+class chemgraph{
+public:
+	chemgraph(){};
+	chemgraph(char filename[]);
+	void printchem();
 
-void initmat(char filename1[], int mat1[MAX_NODE][MAX_NODE], int* node1, int &node_cnt1, char filename2[], int mat2[MAX_NODE][MAX_NODE], int* node2, int &node_cnt2);
+	int g[MAX_NODE][MAX_NODE];
+	int node[MAX_NODE];
+	int node_cnt;
+
+private:
+	int match_ele(const char atom[]);
+
+	static map <string, int> ele;
+	static int ele_cnt;
+};
+
 
 #endif /* input_hpp */
