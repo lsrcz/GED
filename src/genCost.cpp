@@ -14,9 +14,9 @@ using std::min;
 int costMat::computecord(int i, int k, int node_cnt){return i*(node_cnt+1)+k;}
 
 void costMat::getCost(chemgraph g1, chemgraph g2){
-    n_c=g1.node_cnt+1, m_c=g2.node_cnt+1;
-    for (int i=0; i<=g1.node_cnt; i++){
-        for (int j=0; j<=g2.node_cnt; j++){
+    //n_c=g1.node_cnt+1, m_c=g2.node_cnt+1;
+    for (int i=0; i<c_n; i++){
+        for (int j=0; j<c_m; j++){
             if ((i==g1.node_cnt&&j!=g2.node_cnt)||(i!=g1.node_cnt&&j==g2.node_cnt)){
                 cost[i][j]=cvd;
             }
@@ -27,12 +27,11 @@ void costMat::getCost(chemgraph g1, chemgraph g2){
     }
 }
 
-void costMat::getDelta(chemgraph g1, chemgraph g2, float mat_delta[MAX_DSIZE][MAX_DSIZE]){
-    n_d=n_c*m_c;
-    for (int i=0; i<=g1.node_cnt; i++){
-        for (int k=0; k<=g2.node_cnt; k++){
-            for (int j=0; j<=g1.node_cnt; j++){
-                for (int l=0; l<=g2.node_cnt; l++){
+void costMat::getDelta(chemgraph g1, chemgraph g2){
+    for (int i=0; i<c_n; i++){
+        for (int k=0; k<c_m; k++){
+            for (int j=0; j<c_n; j++){
+                for (int l=0; l<c_m; l++){
                     if (i==j||k==l||(g1.g[i][j]==0&&g2.g[k][l]==0))
                         continue;
                     
@@ -47,8 +46,8 @@ void costMat::getDelta(chemgraph g1, chemgraph g2, float mat_delta[MAX_DSIZE][MA
         }
     }
     
-    for (int i=0; i<=g1.node_cnt; i++){
-        for (int j=0; j<=g2.node_cnt; j++){
+    for (int i=0; i<c_n; i++){
+        for (int j=0; j<c_m; j++){
             int cord=computecord(i, j, g2.node_cnt);
             mat_delta[cord][cord]+=cost[i][j];
         }
@@ -57,8 +56,9 @@ void costMat::getDelta(chemgraph g1, chemgraph g2, float mat_delta[MAX_DSIZE][MA
 
 void costMat::printCost(){
     printf("cost matrix C:\n");
-    for (int i=0; i<n_c; i++){
-        for (int j=0; j<m_c; j++){
+    
+    for (int i=0; i<c_n; i++){
+        for (int j=0; j<c_m; j++){
             printf("%d ", cost[i][j]);
         }
         printf("\n");
@@ -66,14 +66,13 @@ void costMat::printCost(){
     printf("\n");
 }
 
-void costMat::printDelta(float mat_delta[MAX_DSIZE][MAX_DSIZE]){
+void costMat::printDelta(){
     printf("cost matrix Delta:\n");
-    for (int i=0; i<n_d; i++){
-        for (int j=0; j<n_d; j++){
+    for (int i=0; i<d_n; i++){
+        for (int j=0; j<d_n; j++){
             printf("%.1f ", mat_delta[i][j]);
         }
         printf("\n");
     }
     printf("\n");
 }
-
