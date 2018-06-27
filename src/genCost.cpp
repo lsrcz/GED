@@ -11,17 +11,17 @@
 #include <algorithm>
 using std::min;
 
-int costMat::computecord(int i, int k, int node_cnt){return i*(node_cnt+1)+k;}
+int costMat::computecord(int i, int k, int n){return i*n+k;}
 
 void costMat::getCost(chemgraph g1, chemgraph g2){
-    //n_c=g1.node_cnt+1, m_c=g2.node_cnt+1;
+    //n_c=g1.node_cnt+1, c_m=g2.node_cnt+1;
     for (int i=0; i<c_n; i++){
         for (int j=0; j<c_m; j++){
             if ((i==g1.node_cnt&&j!=g2.node_cnt)||(i!=g1.node_cnt&&j==g2.node_cnt)){
-                cost[i][j]=cvd;
+                cost[computecord(i, j, c_m)]=cvd;
             }
             else if (i!=g1.node_cnt&&j!=g2.node_cnt&&g1.node[i]!=g2.node[j]){
-                cost[i][j]=cvs;
+                cost[computecord(i, j, c_m)]=cvs;
             }
         }
     }
@@ -36,22 +36,26 @@ void costMat::getDelta(chemgraph g1, chemgraph g2){
                         continue;
                     
                     if (g1.g[i][j]!=0&&g2.g[k][l]!=0){
-                        mat_delta[computecord(i, k, g2.node_cnt)][computecord(j, l, g2.node_cnt)]=min(2*ced, g1.g[i][j]==g2.g[k][l]? 0 : ces)/2;
+                        mat_d[computecord(computecord(i, k, c_m), computecord(j, l, c_m), d_n)]=min(2*ced, g1.g[i][j]==g2.g[k][l]? 0 : ces);
                     }
                     else{
-                        mat_delta[computecord(i, k, g2.node_cnt)][computecord(j, l, g2.node_cnt)]=ced/2.0;
+                        mat_d[computecord(computecord(i, k, c_m), computecord(j, l, c_m), d_n)]=ced;
                     }
                 }
             }
         }
     }
-    
+
+    for (int i = 0; i<d_n; i++)
+        for (int j = 0; j<d_n; j++)
+            mat_delta[computecord(i, j, d_n)] = mat_d[computecord(i, j, d_n)]/2.0;
+    /*
     for (int i=0; i<c_n; i++){
         for (int j=0; j<c_m; j++){
             int cord=computecord(i, j, g2.node_cnt);
             mat_delta[cord][cord]+=cost[i][j];
         }
-    }
+    }*/
 }
 
 void costMat::printCost(){
@@ -59,7 +63,7 @@ void costMat::printCost(){
     
     for (int i=0; i<c_n; i++){
         for (int j=0; j<c_m; j++){
-            printf("%d ", cost[i][j]);
+            printf("%.1f ", cost[computecord(i, j, c_m)]);
         }
         printf("\n");
     }
@@ -70,7 +74,7 @@ void costMat::printDelta(){
     printf("cost matrix Delta:\n");
     for (int i=0; i<d_n; i++){
         for (int j=0; j<d_n; j++){
-            printf("%.1f ", mat_delta[i][j]);
+            printf("%.1f ", mat_delta[computecord(i, j, d_n)]);
         }
         printf("\n");
     }

@@ -19,30 +19,28 @@
 class costMat{
     
 public:
+    double* mat_delta;  //delta = 1/2 d
+    double* mat_d;      //matrix d
+    double* cost;       // matrix c
+    int d_n, c_n, c_m;  //size of matrix, where d = d_n * d_n, c = c_n (rows) * c_m (columns)
+    int cvd, ced, cvs, ces; //modifying costs
+
     costMat(){}
     costMat(int _cvd, int _ced, int _cvs, int _ces, chemgraph g1, chemgraph g2):cvd(_cvd), ced(_ced), cvs(_cvs), ces(_ces){
         //memset(mat_delta, 0, sizeof(mat_delta));
         c_n=g1.node_cnt+1, c_m=g2.node_cnt+1;
         d_n=c_n*c_m;
 
-        cost = (int**)calloc(c_n, sizeof(int*));
-        for (int i=0; i<c_n; i++)
-            cost[i]=(int*)calloc(c_m, sizeof(int));
+        cost = (double*)calloc(c_n*c_m, sizeof(double));
+        mat_delta = (double*) calloc(d_n*d_n, sizeof(double));
+        mat_d = (double*) calloc(d_n*d_n, sizeof(double));
 
-        mat_delta = (float**) calloc(d_n, sizeof(float*));
-        for (int i=0; i<d_n; i++)
-            mat_delta[i]=(float*)calloc(d_n, sizeof(float));
-        
         getCost(g1, g2);
         getDelta(g1, g2);
     }
 
     ~costMat(){
-        for (int i=0; i<c_n; i++)
-            free(cost[i]);
         free(cost);
-        for (int i=0; i<d_n; i++)
-            free(mat_delta[i]);
         free(mat_delta);
     }
 
@@ -50,10 +48,6 @@ public:
     void printCost();
     void printDelta();
     
-    float** mat_delta;
-    int** cost;//[MAX_NODE][MAX_NODE];
-    int d_n, c_n, c_m;
-    int cvd, ced, cvs, ces;
     
 private:
     int computecord(int i, int k, int node_cnt);
