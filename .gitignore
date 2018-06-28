@@ -34,3 +34,5 @@
 cmake-build-debug/
 cmake-build-release/
 .idea/
+gdc-c1/
+.DS_Store
