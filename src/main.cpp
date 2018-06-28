@@ -28,7 +28,6 @@ void IPFPmin(double* x, const costMat& delta){
 
     solveLSAPE(mat_cost, delta.c_n-1, delta.c_m-1, b);
     solveQuadratic(delta, x, b, s_k, l, mult_x_delta);
-
     delete[] mult_x_delta;
     delete[] mat_cost;
     delete[] b;
@@ -39,7 +38,7 @@ int main()
 {
     //cin>>cvd>>ced>>cvs>>ces;
     chemgraph g1=chemgraph(filename1), g2=chemgraph(filename2);
-    costMat delta=costMat(cvd, ced, cvs, ces, g1, g2);
+    costMat delta(cvd, ced, cvs, ces, g1, g2);
     //g1.printchem(), g2.printchem();
     //delta.printCost();
     //delta.printDelta();
