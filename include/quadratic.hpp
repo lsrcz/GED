@@ -12,6 +12,6 @@
 #include <stdio.h>
 #include "genCost.hpp"
 
-void solveQuadratic(const costMat& c, double* x, int* b, double& s_k, double& l, double* mult_x_delta);
+void solveQuadratic(const costMat& c, double* x, int* b, double& s_k, double& l, double* mult_x_d);
 
 #endif /* quadratic_hpp */

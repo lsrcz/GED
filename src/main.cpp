@@ -17,10 +17,10 @@ char filename1[]="g1.gxl", filename2[]="g2.gxl";
 //costMat delta;
 
 void IPFPmin(double* x, const costMat& delta){
-    double* mult_x_delta = new double[delta.d_n];
+    double* mult_x_d = new double[delta.d_n];
     double* mat_cost = new double[delta.d_n];
     int* b = new int[delta.d_n];
-    vecMulMat(x, delta.mat_delta, mult_x_delta, delta.d_n, delta.d_n);
+    vecMulMat(x, delta.mat_d, mult_x_delta, delta.d_n, delta.d_n);
     matAdd(mult_x_delta, delta.cost, delta.d_n, 1, mat_cost);
 
     double s_k = dot(mat_cost, x, delta.d_n);
@@ -35,6 +35,7 @@ void IPFPmin(double* x, const costMat& delta){
       printf("\n");
     }
     solveQuadratic(delta, x, b, s_k, l, mult_x_delta);
+
     delete[] mult_x_delta;
     delete[] mat_cost;
     delete[] b;
@@ -49,7 +50,6 @@ int main()
     //g1.printchem(), g2.printchem();
     //delta.printCost();
     //delta.printDelta();
-    srand(time(NULL));
     double* x = (double*)calloc(delta.d_n, sizeof(double));
 
     for (int i=0; i<std::min(delta.c_n, delta.c_m); i++)
