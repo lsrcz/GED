@@ -12,7 +12,8 @@
 #define MAX_NODE 75
 #define MAX_DSIZE 5600
 int cvd=4, ced=2, cvs=2, ces=1;
-char filename1[]="g1.gxl", filename2[]="g2.gxl";
+char filename1[]="../gdc-c1/alkane/molecule003.gxl",
+        filename2[]="../gdc-c1/alkane/molecule004.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
