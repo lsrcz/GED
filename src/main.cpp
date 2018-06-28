@@ -3,6 +3,7 @@
 #include "genCost.hpp"
 #include "quadratic.hpp"
 #include "lsape.hpp"
+#include "utils.hpp"
 //#include <omp.h>
 #include <cstring>
 #include <ctime>
@@ -12,7 +13,8 @@
 #define MAX_NODE 75
 #define MAX_DSIZE 5600
 int cvd=4, ced=2, cvs=2, ces=1;
-char filename1[]="g1.gxl", filename2[]="g2.gxl";
+char filename1[]="../gdc-c1/alkane/molecule006.gxl",
+        filename2[]="../gdc-c1/alkane/molecule007.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
@@ -53,7 +55,7 @@ int main()
     double* x = (double*)calloc(delta.d_n, sizeof(double));
 
     for (int i=0; i<std::min(delta.c_n, delta.c_m); i++)
-    	x[i*delta.c_m+i]=1;
+    	x[i*delta.c_m+delta.c_m - 1 - i]=1;
    	if (delta.c_n>delta.c_m){
    		for (int i=delta.c_m; i<delta.c_n; i++)
    			x[(i+1)*delta.c_m-1]=1;
