@@ -15,6 +15,9 @@ void matMulVec(double * __restrict A, double * __restrict b, double * __restrict
 inline
 void vecMulMat(double * __restrict b, double * __restrict A, double * __restrict c, int m, int n);
 
+// m vec b, return cb
+inline
+void scalarMulMat(double * __restrict b, int n, int m, double c, double * __restrict output);
 
 double dot(double * __restrict a, double * __restrict b, int len);
 

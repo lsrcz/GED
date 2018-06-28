@@ -23,6 +23,17 @@ void vecMulMat(double * __restrict b, double * __restrict A, double * __restrict
     }
 }
 
+// m vec b, return cb
+inline
+void scalarMulMat(double * __restrict b, int n, int m, double c, double * __restrict output) {
+#pragma omp parallel for
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            output[i * n + j] = b[i * n + j] * c;
+        }
+    }
+}
+
 double dot(double * __restrict a, double * __restrict b, int len) {
     double ret = 0;
     for (int i = 0; i < len; ++i) {
