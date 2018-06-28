@@ -2,6 +2,8 @@
 // Created by 卢思睿 on 2018/6/4.
 //
 
+#include "utils.hpp"
+
 inline
 void matMulVec(double *__restrict A, double *__restrict b, double *__restrict c, int n, int m) {
     memset(c, 0, n * sizeof(double));
@@ -101,4 +103,13 @@ int dot(int * __restrict a, int * __restrict b, int len) {
         ret += a[i] * b[i];
     }
     return ret;
+}
+
+inline
+bool vecEq(double * __restrict a, double * __restrict b, int len) {
+    for (int i = 0; i < len; ++i) {
+        if (!doubleeq(a[i], b[i]))
+            return false;
+    }
+    return true;
 }

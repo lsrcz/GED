@@ -22,8 +22,8 @@ void IPFPmin(double* x, const costMat& delta){
     double* mult_x_d = new double[delta.d_n];
     double* mat_cost = new double[delta.d_n];
     int* b = new int[delta.d_n];
-    vecMulMat(x, delta.mat_d, mult_x_delta, delta.d_n, delta.d_n);
-    matAdd(mult_x_delta, delta.cost, delta.d_n, 1, mat_cost);
+    vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
+    matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
 
     double s_k = dot(mat_cost, x, delta.d_n);
     double l = dot(delta.cost, x, delta.d_n);
@@ -36,9 +36,9 @@ void IPFPmin(double* x, const costMat& delta){
         printf("%d ", b[i*delta.c_m+j]);
       printf("\n");
     }
-    solveQuadratic(delta, x, b, s_k, l, mult_x_delta);
+    solveQuadratic(delta, x, b, s_k, l, mult_x_d);
 
-    delete[] mult_x_delta;
+    delete[] mult_x_d;
     delete[] mat_cost;
     delete[] b;
 }

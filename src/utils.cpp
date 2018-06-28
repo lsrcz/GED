@@ -5,6 +5,8 @@
 #include "utils.hpp"
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <cmath>
 
 void printMat(double *mat, int r, int c, const std::string &name) {
     std::cout << name << std::endl;
@@ -14,4 +16,8 @@ void printMat(double *mat, int r, int c, const std::string &name) {
         }
         printf("\n");
     }
+}
+
+bool doubleeq(double u, double v, double epsilon) {
+    return std::fabs(u-v) < epsilon;
 }

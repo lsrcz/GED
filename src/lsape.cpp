@@ -2,16 +2,13 @@
 // Created by 卢思睿 on 2018/6/8.
 //
 
-#include <lsape.hpp>
 #include <cstring>
 #include <algorithm>
 #include <cmath>
+#include "utils.hpp"
+#include "lsape.hpp"
 
 using std::min;
-
-bool doubleeq(double u, double v, double epsilon=1e-6) {
-    return std::fabs(u-v) < epsilon;
-}
 
 void
 preProcessing(double *cost, int *rho, int *varrho,
