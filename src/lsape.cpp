@@ -340,6 +340,7 @@ solveLSAPE(double *cost, int n, int m, int *b) {
             b[basepos + j] = 1;
         }
     }
+    b[(n + 1) * (m + 1) - 1] = 1;
     delete[] v;
     delete[] u;
     delete[] varrho;
