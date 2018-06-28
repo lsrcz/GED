@@ -19,6 +19,12 @@ void vecMulMat(double *__restrict b, double *__restrict A, double *__restrict c,
 inline
 void scalarMulVec(double *b, int n, double c, double *output);
 
+inline
+void scalaMulVecInsitu(double *b, int n, double c);
+
+inline
+void matAdd(double * __restrict A, double * __restrict B, int n, int m, double * __restrict output);
+
 double dot(double * __restrict a, double * __restrict b, int len);
 
 double dot(int * __restrict a, double * __restrict b, int len);

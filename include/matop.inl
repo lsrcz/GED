@@ -26,9 +26,25 @@ void vecMulMat(double *__restrict b, double *__restrict A, double *__restrict c,
 // m vec b, return cb
 inline
 void scalarMulVec(double *b, int n, double c, double *output) {
-#pragma omp parallel for
     for (int i = 0; i < n; ++i) {
         output[i] = b[i] * c;
+    }
+}
+
+inline
+void scalaMulVecInsitu(double *b, int n, double c) {
+    for (int i = 0; i < n; ++i) {
+        b[i] *= c;
+    }
+}
+
+inline
+void matAdd(double * __restrict A, double * __restrict B, int n, int m, double * __restrict output) {
+#pragma omp parallel for
+    for (int i = 0; i < n ; ++i) {
+        for (int j = 0; j < m; ++j) {
+            output[i * n + m] = A[i * n + m] + B[i * n + m];
+        }
     }
 }
 
