@@ -15,9 +15,15 @@ void matMulVec(double *__restrict A, double *__restrict b, double *__restrict c,
 inline
 void vecMulMat(double *__restrict b, double *__restrict A, double *__restrict c, int n, int m);
 
+inline
+void matMulVec(double *__restrict A, int *__restrict b, double *__restrict c, int n, int m);
+
 // m vec b, return cb
 inline
 void scalarMulVec(double *b, int n, double c, double *output);
+
+inline
+void scalarMulVec(int *b, int n, double c, double *output);
 
 inline
 void scalaMulVecInsitu(double *b, int n, double c);
@@ -25,12 +31,16 @@ void scalaMulVecInsitu(double *b, int n, double c);
 inline
 void matAdd(double * __restrict A, double * __restrict B, int n, int m, double * __restrict output);
 
+inline
 double dot(double * __restrict a, double * __restrict b, int len);
 
+inline
 double dot(int * __restrict a, double * __restrict b, int len);
 
+inline
 double dot(double * __restrict a, int * __restrict b, int len);
 
+inline
 int dot(int * __restrict a, int * __restrict b, int len);
 
 #include "matop.inl"

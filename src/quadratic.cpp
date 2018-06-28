@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include "matop.hpp"
 #include "genCost.hpp"
-void solveQuadratic(costMat c, double* x, double* b, double& s_k, double& l, double* mult_x_delta){
+void solveQuadratic(costMat c, double* x, int* b, double& s_k, double& l, double* mult_x_delta){
 	double* mult_delta_b = (double*) calloc(c.d_n, sizeof(double));
 	matMulVec(c.mat_delta, b, mult_delta_b, c.d_n, c.d_n);
 
@@ -43,6 +43,9 @@ void solveQuadratic(costMat c, double* x, double* b, double& s_k, double& l, dou
 
 		s_k = s_k - alpha * alpha / (4 * beta);
 		l = dot(c.cost, x, c.c_m * c.c_n);
+		
+		free(tmp_vec1);
+		free(tmp_vec2);
 	}
 
 	free(mult_delta_b);

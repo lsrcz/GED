@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <cassert>
 
 using std::cout;
 using std::endl;
