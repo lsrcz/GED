@@ -3,34 +3,32 @@
 //
 
 
-void matMulVec(double *__restrict A, double * __restrict b, double * __restrict c, int m, int n) {
-    memset(c, 0, m * sizeof(double));
+void matMulVec(double *__restrict A, double *__restrict b, double *__restrict c, int n, int m) {
+    memset(c, 0, n * sizeof(double));
 #pragma omp parallel for
-    for (int i = 0; i < m; ++i) {
-        for (int j = 0; j < n; ++j) {
-            c[i] += A[i * n + j] * b[j];
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            c[i] += A[i * m + j] * b[j];
         }
     }
 }
 
-void vecMulMat(double * __restrict b, double * __restrict A, double * __restrict c, int m, int n) {
-    memset(c, 0, m * sizeof(double));
+void vecMulMat(double *__restrict b, double *__restrict A, double *__restrict c, int n, int m) {
+    memset(c, 0, n * sizeof(double));
 #pragma omp parallel for
-    for (int i = 0; i < m; ++i) {
-        for (int j = 0; j < n; ++j) {
-            c[j] += b[i] * A[i * n + j];
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            c[j] += b[i] * A[i * m + j];
         }
     }
 }
 
 // m vec b, return cb
 inline
-void scalarMulMat(double * __restrict b, int n, int m, double c, double * __restrict output) {
+void scalarMulVec(double *b, int n, double c, double *output) {
 #pragma omp parallel for
     for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < m; ++j) {
-            output[i * n + j] = b[i * n + j] * c;
-        }
+        output[i] = b[i] * c;
     }
 }
 

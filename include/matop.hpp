@@ -7,17 +7,17 @@
 
 #include <cstring>
 
-// m * n mat A, n vec b, m output vec c
+// n * m mat A, n vec b, m output vec c
 inline
-void matMulVec(double * __restrict A, double * __restrict b, double * __restrict c, int m, int n);
+void matMulVec(double *__restrict A, double *__restrict b, double *__restrict c, int n, int m);
 
-// m * n mat A, m vec b^T, n output vec c
+// n * m mat A, m vec b^T, n output vec c
 inline
-void vecMulMat(double * __restrict b, double * __restrict A, double * __restrict c, int m, int n);
+void vecMulMat(double *__restrict b, double *__restrict A, double *__restrict c, int n, int m);
 
 // m vec b, return cb
 inline
-void scalarMulMat(double * __restrict b, int n, int m, double c, double * __restrict output);
+void scalarMulVec(double *b, int n, double c, double *output);
 
 double dot(double * __restrict a, double * __restrict b, int len);
 
