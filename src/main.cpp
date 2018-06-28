@@ -27,6 +27,13 @@ void IPFPmin(double* x, const costMat& delta){
     double l = dot(delta.cost, x, delta.d_n);
 
     solveLSAPE(mat_cost, delta.c_n-1, delta.c_m-1, b);
+
+    printf("mat b\n");
+    for (int i=0; i<delta.c_n; i++){
+      for(int j=0; j<delta.c_m; j++)
+        printf("%d ", b[i*delta.c_m+j]);
+      printf("\n");
+    }
     solveQuadratic(delta, x, b, s_k, l, mult_x_delta);
     delete[] mult_x_delta;
     delete[] mat_cost;
@@ -62,5 +69,10 @@ int main()
    		printf("\n");
    	}
     IPFPmin(x, delta);
-    
+    printf("mat x\n");
+    for (int i=0; i<delta.c_n; i++){
+      for(int j=0; j<delta.c_m; j++)
+        printf("%f ", x[i*delta.c_m+j]);
+      printf("\n");
+    }
 }
