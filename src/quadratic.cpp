@@ -9,7 +9,7 @@
 #include "quadratic.hpp"
 #include "string.h"
 #include "stdlib.h"
-#include "matop.h"
+#include "matop.hpp"
 #include "genCost.hpp"
 void solveQuadratic(costMat c, double* x, double* b, double& s_k, double& l){
 	double* mult_delta_b = (double*) calloc(c.d_n, sizeof(double));

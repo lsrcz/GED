@@ -1,9 +1,9 @@
 //
 // Created by 卢思睿 on 2018/6/20.
 //
-#include "lsape.h"
-#include "lsap.h"
-#include "matop.h"
+#include "lsape.hpp"
+#include "lsap.hpp"
+#include "matop.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
