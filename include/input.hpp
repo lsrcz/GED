@@ -20,6 +20,7 @@ public:
 	chemgraph(){};
 	chemgraph(char filename[]);
 	void printchem();
+	void muta_avoid_H();
 
 	int g[MAX_NODE][MAX_NODE];
 	int node[MAX_NODE];

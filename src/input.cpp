@@ -23,7 +23,6 @@ void s_strncpy(char *dst, char *src, int len){strncpy(dst, src, len); dst[len]='
 
 chemgraph::chemgraph(char filename[])
 {
-	bool muta=false;
 	FILE *pfile;
 	char buffer[200], str1[3];
 	char *pstr, *tmp;
@@ -77,7 +76,9 @@ chemgraph::chemgraph(char filename[])
 
 			pstr=strchr(tmp+2, '>');
 			pstr=strchr(pstr+1, '>');
-			g[a][b]=g[b][a]=pstr[1]-'0';
+			if (pstr[1]=='0')
+				g[a][b]=g[b][a]=1000000; //valence=0 qu nin ma de
+			else g[a][b]=g[b][a]=pstr[1]-'0';
 		}
 		else{
 			pstr=strchr(buffer, '_');
@@ -92,11 +93,21 @@ chemgraph::chemgraph(char filename[])
 			fgets(buffer, 200, pfile);
 			pstr=strchr(buffer, '>');
 			pstr=strchr(pstr+1, '>');
-			g[a][b]=g[b][a]=pstr[1]-'0';
+			if (pstr[1]=='0')
+				g[a][b]=g[b][a]=1000000; //valence=0 qu nin ma de
+			else g[a][b]=g[b][a]=pstr[1]-'0';
 			fgets(buffer, 200, pfile);
 		}
 	}while (fgets(buffer, 200, pfile), buffer[1]=='e');
 
+
+	if (node_cnt<40)
+		muta = false;
+}
+
+void chemgraph::muta_avoid_H(){
+	printf("original:\n");
+	printchem();
 	if (muta){
 		map <string, int>::iterator it=ele.find("H");
 		if (it==ele.end()){
@@ -115,6 +126,7 @@ chemgraph::chemgraph(char filename[])
 				node_cnt_new++;
 			}
 		int tmp_node = 0;
+		printf("%d\n", H_num);
 		for (int i=0; i<node_cnt; i++){
 			if (node[i]==H_num)
 				continue;
@@ -123,7 +135,7 @@ chemgraph::chemgraph(char filename[])
 				if (node[i]==H_num && g[i][j]>0){
 					node_with_H[tmp_node]++;
 				}
-				else{
+				else if (g[i][j]>0){
 					graph_new[tmp_node][tmp_node_cnt]=g[i][j];
 					tmp_node_cnt++;
 				}
@@ -139,7 +151,11 @@ chemgraph::chemgraph(char filename[])
 			for (int j=0; j<node_cnt; j++)
 				g[i][j]=graph_new[i][j];
 		}
+		for (int i=0; i<node_cnt; i++)
+			printf("%d ", node_with_H[i]);
 	}
+	printf("then:\n");
+	printchem();
 }
 
 void chemgraph::printchem(){
