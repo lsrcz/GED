@@ -13,8 +13,8 @@
 #define MAX_NODE 75
 #define MAX_DSIZE 5600
 int cvd=4, ced=2, cvs=2, ces=1;
-char filename1[]="../gdc-c1/mao/molecule31.gxl",
-        filename2[]="../gdc-c1/mao/molecule52.gxl";
+char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3875.gxl",
+        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3419.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
@@ -71,17 +71,58 @@ double compute_cost(double* x, const costMat& c){
   return ret;
 }
 
+void randomInit(double *x, int c_n, int c_m, int max_row_sample_times, int max_col_sample_times, int max_assign_times) {
+    srand(time(NULL));
+    memset(x, 0, sizeof(double) * c_n * c_m);
+    int assigned_times = 0;
+    bool *row_assigned = new bool[c_n - 1];
+    bool *col_assigned = new bool[c_m - 1];
+    memset(row_assigned, 0, sizeof(bool) * (c_n - 1));
+    memset(col_assigned, 0, sizeof(bool) * (c_m - 1));
+    for (int i = 0; i < max_row_sample_times; ++i) {
+        int row = rand() % (c_n - 1);
+        if (row_assigned[row]) {
+            continue;
+        } else {
+            for (int j = 0; j < max_col_sample_times; ++j) {
+                int col = rand() % (c_m - 1);
+                if (col_assigned[col])
+                    continue;
+                x[row * c_m + col] = 1;
+                col_assigned[col] = true;
+                row_assigned[row] = true;
+                ++assigned_times;
+                break;
+            }
+        }
+        if (assigned_times == max_assign_times)
+            break;
+    }
+    for (int i = 0; i < c_m; ++i) {
+        if (col_assigned[i])
+            continue;
+        x[(c_n - 1) * c_m + i] = true;
+    }
+    for (int i = 0; i < c_n; ++i) {
+        if (row_assigned[i])
+            continue;
+        x[(i + 1) * c_m - 1] = true;
+    }
+    x[c_n * c_m - 1] = true;
+}
+
 
 int main()
 {
     //cin>>cvd>>ced>>cvs>>ces;
     chemgraph g1=chemgraph(filename1), g2=chemgraph(filename2);
     costMat delta(cvd, ced, cvs, ces, g1, g2);
-    //g1.printchem(), g2.printchem();
-    //delta.printCost();
-    //delta.printDelta();
+    g1.printchem(), g2.printchem();
+    delta.printCost();
+    delta.printDelta();
     double* x = (double*)calloc(delta.d_n, sizeof(double));
 
+    /*
     for (int i=0; i<std::min(delta.c_n, delta.c_m); i++)
     	x[i*delta.c_m+delta.c_m - 1 - i]=1;
    	if (delta.c_n>delta.c_m){
@@ -92,7 +133,8 @@ int main()
    		for(int i=delta.c_n; i<delta.c_m; i++)
    			x[(delta.c_n-1)*delta.c_m+i]=1;
    	}
-   	x[delta.c_n*delta.c_m-1]=1;
+   	x[delta.c_n*delta.c_m-1]=1;*/
+    randomInit(x, delta.c_n, delta.c_m, delta.c_n * 5, delta.c_m * 5, 10000);
 
     printMat(x, delta.c_n, delta.c_m, "mat x");
 
