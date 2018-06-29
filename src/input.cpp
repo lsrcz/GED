@@ -60,6 +60,11 @@ chemgraph::chemgraph(char filename[])
 	}while (fgets(buffer, 200, pfile), buffer[1]=='n');
 	node_cnt=cnt;
 
+
+	if (node_cnt==1)
+		return;
+
+
 	do{
 		if (flag){
 			pstr=strchr(buffer, '\"');
