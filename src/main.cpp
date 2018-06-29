@@ -13,10 +13,12 @@
 #define MAX_NODE 75
 #define MAX_DSIZE 5600
 int cvd=4, ced=2, cvs=2, ces=1;
-char filename1[]="../gdc-c1/alkane/molecule001.gxl",
-        filename2[]="../gdc-c1/alkane/molecule091.gxl";
-//char filename1[]="../gdc-c1/alkane/molecule003.gxl",
-//        filename2[]="../gdc-c1/alkane/molecule004.gxl";
+//char filename1[]="../gdc-c1/alkane/molecule002.gxl",
+//        filename2[]="../gdc-c1/alkane/molecule003.gxl";
+//char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3875.gxl",
+//        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3419.gxl";
+char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_664.gxl",
+        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_2876.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
@@ -26,6 +28,7 @@ void IPFPmin(double* x, const costMat& delta){
     double* mat_cost = new double[delta.d_n];
     int* b = new int[delta.d_n];
     double* x_k = new double[delta.d_n];
+    double* mat_sub = new double[delta.d_n];
     memcpy(x_k, x, delta.d_n*sizeof(double));
 
     vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
@@ -44,10 +47,20 @@ void IPFPmin(double* x, const costMat& delta){
       //printMat(b, delta.c_n, delta.c_m, "mat b");
 
       solveQuadratic(delta, x, b, s_k, l, mult_x_d);
+
+
+      matSub(x, x_k, 1, delta.d_n, mat_sub);
+      double sub_norm = vecNorm(mat_sub, delta.d_n);
+      double sub_norm_inf = vecInfNorm(mat_sub, delta.d_n);
+      printf("%f\n", sub_norm);
+      printf("%f\n", sub_norm_inf);
+
+
+
       if (vecEq(x, x_k, delta.d_n))
         break;
-      if (clock() - clk > 10 * CLOCKS_PER_SEC)
-          break;
+      //if (clock() - clk > 20 * CLOCKS_PER_SEC)
+      //    break;
       vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
       matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
       memcpy(x_k, x, delta.d_n*sizeof(double));
@@ -132,7 +145,7 @@ int main()
     //delta.printDelta();
     double* x = (double*)calloc(delta.d_n, sizeof(double));
 
-    /*
+/*
     for (int i=0; i<std::min(delta.c_n, delta.c_m); i++)
     	x[i*delta.c_m+delta.c_m - 1 - i]=1;
    	if (delta.c_n>delta.c_m){
@@ -154,7 +167,7 @@ int main()
 
     printf("%f\n", compute_cost(x, delta));
 
-    printMat(x, delta.c_n, delta.c_m, "mat x");
+
 
 
 }

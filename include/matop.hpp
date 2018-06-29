@@ -6,6 +6,7 @@
 #define GED_MATOP_H
 
 #include <cstring>
+#include <cmath>
 
 // n * m mat A, n vec b, m output vec c
 inline
@@ -32,6 +33,9 @@ inline
 void matAdd(double * __restrict A, double * __restrict B, int n, int m, double * __restrict output);
 
 inline
+void matSub(double * __restrict A, double * __restrict B, int n, int m, double * __restrict output);
+
+inline
 double dot(double * __restrict a, double * __restrict b, int len);
 
 inline
@@ -46,7 +50,14 @@ int dot(int * __restrict a, int * __restrict b, int len);
 inline
 bool vecEq(double * __restrict a, double * __restrict b, int len);
 
+inline
 bool vecEq(double * __restrict a, int * __restrict b, int len);
+
+inline
+double vecNorm(double * __restrict a, int len);
+
+inline
+double vecInfNorm(double * __restrict a, int len);
 
 #include "matop.inl"
 
