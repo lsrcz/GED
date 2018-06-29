@@ -17,10 +17,12 @@ int cvd=4, ced=2, cvs=2, ces=1;
 //        filename2[]="../gdc-c1/alkane/molecule003.gxl";
 //char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3875.gxl",
 //        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3419.gxl";
-//char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3225.gxl",
-//        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3131.gxl";
-char filename1[]="../gdc-c1/mao/molecule18.gxl",
-        filename2[]="../gdc-c1/mao/molecule63.gxl";
+//char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_2876.gxl",
+//        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3990.gxl";
+char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3214.gxl",
+        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_4018.gxl";
+//char filename1[]="../gdc-c1/mao/molecule18.gxl",
+//        filename2[]="../gdc-c1/mao/molecule63.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
@@ -33,7 +35,9 @@ void IPFPmin(double* x, const costMat& delta){
     double* mat_sub = new double[delta.d_n];
     memcpy(x_k, x, delta.d_n*sizeof(double));
 
-    vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
+    // use transpose
+    // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
+    matMulVec(delta.mat_d, x, mult_x_d, delta.d_n, delta.d_n);
     matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
 
     double s_k = dot(mat_cost, x, delta.d_n);
@@ -52,18 +56,20 @@ void IPFPmin(double* x, const costMat& delta){
 
 
       matSub(x, x_k, 1, delta.d_n, mat_sub);
-      double sub_norm = vecNorm(mat_sub, delta.d_n);
+      //double sub_norm = vecNorm(mat_sub, delta.d_n);
       double sub_norm_inf = vecInfNorm(mat_sub, delta.d_n);
-      printf("%f\n", sub_norm);
+      //printf("%f\n", sub_norm);
       printf("%f\n", sub_norm_inf);
 
 
 
       if (vecEq(x, x_k, delta.d_n))
         break;
-      //if (clock() - clk > 20 * CLOCKS_PER_SEC)
-      //    break;
-      vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
+      if (clock() - clk > 20 * CLOCKS_PER_SEC)
+          break;
+      // use transpose
+      // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
+      matMulVec(delta.mat_d, x, mult_x_d, delta.d_n, delta.d_n);
       matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
       memcpy(x_k, x, delta.d_n*sizeof(double));
 
@@ -71,7 +77,9 @@ void IPFPmin(double* x, const costMat& delta){
     }
 
     if (!vecEq(x, b, delta.d_n)){
-      vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
+        // use transpose
+        // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
+        matMulVec(delta.mat_d, x, mult_x_d, delta.d_n, delta.d_n);
       matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
       solveLSAPE(mat_cost, delta.c_n-1, delta.c_m-1, b);
       for (int i=0; i<delta.d_n; i++)
@@ -154,7 +162,7 @@ int main()
     //cin>>cvd>>ced>>cvs>>ces;
     chemgraph g1=chemgraph(filename1), g2=chemgraph(filename2);
     costMat delta(cvd, ced, cvs, ces, g1, g2);
-    //g1.printchem(), g2.printchem();
+    g1.printchem(), g2.printchem();
     //delta.printCost();
     //delta.printDelta();
     double* x = (double*)calloc(delta.d_n, sizeof(double));
@@ -171,16 +179,16 @@ int main()
    			x[(delta.c_n-1)*delta.c_m+i]=1;
    	}
    	x[delta.c_n*delta.c_m-1]=1;*/
-    assert(delta.c_n * delta.c_m == delta.d_n);
     randomInit(x, delta.c_n, delta.c_m, delta.c_n, delta.c_m, 10000);
-    readMatrix("mat_1", x, sizeof(double), delta.d_n);
+    //readMatrix("mat_muta", x, sizeof(double), delta.d_n);
     //writeMatrix("mat_1", x, sizeof(double), delta.d_n);
-
+    printMat(x, delta.c_m, delta.c_n, "x");
     IPFPmin(x, delta);
 
     //printMat(x, delta.c_n, delta.c_m, "mat x");
+    printAssignment(x,delta.c_n - 1, delta.c_m - 1);
 
     printf("%f\n", compute_cost(x, delta));
 
-    writeMatrix("mat", x, sizeof(double), delta.d_n);
+    //writeMatrix("mat", x, sizeof(double), delta.d_n);
 }

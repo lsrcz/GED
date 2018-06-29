@@ -13,4 +13,6 @@ void printMat(int *mat, int r, int c, const std::string &name);
 
 bool doubleeq(double u, double v, double epsilon=1e-6);
 
+void printAssignment(double *x, int n, int m);
+
 #endif //GED_UTILS_H

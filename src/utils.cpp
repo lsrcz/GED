@@ -31,3 +31,20 @@ void printMat(int *mat, int r, int c, const std::string &name) {
 bool doubleeq(double u, double v, double epsilon) {
     return std::fabs(u-v) < epsilon;
 }
+
+void printAssignment(double *x, int n, int m) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (doubleeq(x[i * (m + 1) + j], 1)) {
+                printf("%d -> %d\n", i + 1, j + 1);
+            }
+        }
+        if (doubleeq(x[i * (m + 1) + m], 1))
+            printf("%d -> eps\n", i + 1);
+    }
+    for (int j = 0; j < m; ++j) {
+        if (doubleeq(x[n * (m + 1) + j], 1)) {
+            printf("eps -> %d\n", j + 1);
+        }
+    }
+}
