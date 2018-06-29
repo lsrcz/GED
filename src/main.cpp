@@ -154,4 +154,7 @@ int main()
 
     printf("%f\n", compute_cost(x, delta));
 
+    printMat(x, delta.c_n, delta.c_m, "mat x");
+
+
 }
