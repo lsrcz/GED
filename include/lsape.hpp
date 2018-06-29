@@ -2,8 +2,8 @@
 // Created by 卢思睿 on 2018/6/8.
 //
 
-#ifndef GED_LSAPE_H
-#define GED_LSAPE_H
+#ifndef GED_LSAPE_HPP
+#define GED_LSAPE_HPP
 
 void
 preProcessing(double *cost, int *rho, int *varrho,
@@ -28,4 +28,4 @@ hungarianLSAPE(double *cost, int n, int m, int *rho, int *varrho, double *u, dou
 void
 solveLSAPE(double *cost, int n, int m, int *b);
 
-#endif //GED_LSAPE_H
+#endif //GED_LSAPE_HPP

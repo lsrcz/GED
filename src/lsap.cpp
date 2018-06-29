@@ -11,14 +11,13 @@
 const int N = 150;
 const int INF = 0x3f3f3f3f;
 const long long TINF = 0x7f7f7f7f7f7f7f7f;
-const double DINF = *(reinterpret_cast<const double*>(&TINF));
+const double DINF = *(reinterpret_cast<const double *>(&TINF));
 bool visitx[N], visity[N];
 double lx[N], ly[N];
 double slack[N];
 int match[N];
 
-bool Hungary(double *mat, int size, int u)
-{
+bool Hungary(double *mat, int size, int u) {
     visitx[u] = true;
     for (int i = 0; i < size; ++i) {
         if (visity[i])

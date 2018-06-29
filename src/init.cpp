@@ -9,11 +9,11 @@
 #include <algorithm>
 
 void randomInit(double *x, int c_n, int c_m, int max_row_sample_times, int max_col_sample_times, int max_assign_times) {
-    srand(time(NULL));
+    srand((unsigned int)time(nullptr));
     memset(x, 0, sizeof(double) * c_n * c_m);
     int assigned_times = 0;
-    bool *row_assigned = new bool[c_n - 1];
-    bool *col_assigned = new bool[c_m - 1];
+    auto row_assigned = new bool[c_n - 1];
+    auto col_assigned = new bool[c_m - 1];
     memset(row_assigned, 0, sizeof(bool) * (c_n - 1));
     memset(col_assigned, 0, sizeof(bool) * (c_m - 1));
     for (int i = 0; i < max_row_sample_times; ++i) {
@@ -49,15 +49,14 @@ void randomInit(double *x, int c_n, int c_m, int max_row_sample_times, int max_c
 }
 
 void diagonalInit(double *x, int c_n, int c_m) {
-    for (int i=0; i<std::min(c_n, c_m); i++)
-        x[i*c_m+c_m - 1 - i]=1;
-    if (c_n>c_m){
-        for (int i=c_m; i<c_n; i++)
-            x[(i+1)*c_m-1]=1;
+    for (int i = 0; i < std::min(c_n, c_m); i++)
+        x[i * c_m + c_m - 1 - i] = 1;
+    if (c_n > c_m) {
+        for (int i = c_m; i < c_n; i++)
+            x[(i + 1) * c_m - 1] = 1;
+    } else {
+        for (int i = c_n; i < c_m; i++)
+            x[(c_n - 1) * c_m + i] = 1;
     }
-    else{
-        for(int i=c_n; i<c_m; i++)
-            x[(c_n-1)*c_m+i]=1;
-    }
-    x[c_n*c_m-1]=1;
+    x[c_n * c_m - 1] = 1;
 }

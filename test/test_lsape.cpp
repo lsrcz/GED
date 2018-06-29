@@ -22,18 +22,18 @@ void test_augment() {
             4, 0, 1, 7, 8, 4, 0
     };
     int k = 4;
-    int rho[] = {3,0,1,4,0};
-    int varrho[] = {3,6,1,4,0,0};
+    int rho[] = {3, 0, 1, 4, 0};
+    int varrho[] = {3, 6, 1, 4, 0, 0};
     int U[1000];
     int SV[1000];
     int pred[1000];
     double pi[1000];
     int zi = 0;
     int zj = 0;
-    double u[] = {0,0,0,0,0};
-    double v[] = {0,0,0,0,0,0};
+    double u[] = {0, 0, 0, 0, 0};
+    double v[] = {0, 0, 0, 0, 0, 0};
     int n = 5, m = 6;
-    augmentCol(k,cost,rho,varrho,U,SV,pred,pi,zi,zj,u,v,n,m);
+    augmentCol(k, cost, rho, varrho, U, SV, pred, pi, zi, zj, u, v, n, m);
     int j = 0;
 }
 
@@ -62,7 +62,7 @@ void test_one() {
     double bc[100];
     for (int i = 0; i < 81; ++i)
         bc[i] = b[i];
-    cout << "dot" << dot(c1,bc,81) << endl;
+    cout << "dot" << dot(c1, bc, 81) << endl;
 
     for (int i = 0; i < 9; ++i)
         for (int j = 0; j < 9; ++j)

@@ -59,9 +59,9 @@ void scalaMulVecInsitu(double *b, int n, double c) {
 }
 
 inline
-void matAdd(double * __restrict A, double * __restrict B, int n, int m, double * __restrict output) {
+void matAdd(double *__restrict A, double *__restrict B, int n, int m, double *__restrict output) {
 #pragma omp parallel for
-    for (int i = 0; i < n ; ++i) {
+    for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
             output[i * m + j] = A[i * m + j] + B[i * m + j];
         }
@@ -69,9 +69,9 @@ void matAdd(double * __restrict A, double * __restrict B, int n, int m, double *
 }
 
 inline
-void matSub(double * __restrict A, double * __restrict B, int n, int m, double * __restrict output) {
+void matSub(double *__restrict A, double *__restrict B, int n, int m, double *__restrict output) {
 #pragma omp parallel for
-    for (int i = 0; i < n ; ++i) {
+    for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
             output[i * m + j] = A[i * m + j] - B[i * m + j];
         }
@@ -79,7 +79,7 @@ void matSub(double * __restrict A, double * __restrict B, int n, int m, double *
 }
 
 inline
-double dot(double * __restrict a, double * __restrict b, int len) {
+double dot(double *__restrict a, double *__restrict b, int len) {
     double ret = 0;
     for (int i = 0; i < len; ++i) {
         ret += a[i] * b[i];
@@ -88,7 +88,7 @@ double dot(double * __restrict a, double * __restrict b, int len) {
 }
 
 inline
-double dot(int * __restrict a, double * __restrict b, int len) {
+double dot(int *__restrict a, double *__restrict b, int len) {
     double ret = 0;
     for (int i = 0; i < len; ++i) {
         ret += a[i] * b[i];
@@ -97,7 +97,7 @@ double dot(int * __restrict a, double * __restrict b, int len) {
 }
 
 inline
-double dot(double * __restrict a, int * __restrict b, int len) {
+double dot(double *__restrict a, int *__restrict b, int len) {
     double ret = 0;
     for (int i = 0; i < len; ++i) {
         ret += a[i] * b[i];
@@ -106,7 +106,7 @@ double dot(double * __restrict a, int * __restrict b, int len) {
 }
 
 inline
-int dot(int * __restrict a, int * __restrict b, int len) {
+int dot(int *__restrict a, int *__restrict b, int len) {
     int ret = 0;
     for (int i = 0; i < len; ++i) {
         ret += a[i] * b[i];
@@ -115,7 +115,7 @@ int dot(int * __restrict a, int * __restrict b, int len) {
 }
 
 inline
-bool vecEq(double * __restrict a, double * __restrict b, int len) {
+bool vecEq(double *__restrict a, double *__restrict b, int len) {
     for (int i = 0; i < len; ++i) {
         if (!doubleeq(a[i], b[i], 1e-3))
             return false;
@@ -125,16 +125,16 @@ bool vecEq(double * __restrict a, double * __restrict b, int len) {
 
 
 inline
-bool vecEq(double * __restrict a, int * __restrict b, int len) {
+bool vecEq(double *__restrict a, int *__restrict b, int len) {
     for (int i = 0; i < len; ++i) {
-        if (!doubleeq(a[i], (double)b[i], 1e-3))
+        if (!doubleeq(a[i], (double) b[i], 1e-3))
             return false;
     }
     return true;
 }
 
 inline
-double vecNorm(double * __restrict a, int len) {
+double vecNorm(double *__restrict a, int len) {
     double sum = 0;
     for (int i = 0; i < len; ++i) {
         sum += a[i] * a[i];
@@ -143,7 +143,7 @@ double vecNorm(double * __restrict a, int len) {
 }
 
 inline
-double vecInfNorm(double * __restrict a, int len) {
+double vecInfNorm(double *__restrict a, int len) {
     double maxVal = 0;
     for (int i = 0; i < len; ++i) {
         maxVal = std::max(maxVal, a[i]);

@@ -8,14 +8,14 @@
 #include "quadratic.hpp"
 
 
-void IPFPmin(double* x, const costMat& delta){
+void IPFPmin(double *x, const costMat &delta) {
     auto clk = clock();
-    double* mult_x_d = new double[delta.d_n];
-    double* mat_cost = new double[delta.d_n];
-    int* b = new int[delta.d_n];
-    double* x_k = new double[delta.d_n];
-    double* mat_sub = new double[delta.d_n];
-    memcpy(x_k, x, delta.d_n*sizeof(double));
+    auto mult_x_d = new double[delta.d_n];
+    auto mat_cost = new double[delta.d_n];
+    auto b = new int[delta.d_n];
+    auto x_k = new double[delta.d_n];
+    auto mat_sub = new double[delta.d_n];
+    memcpy(x_k, x, delta.d_n * sizeof(double));
 
     // use transpose
     // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
@@ -28,9 +28,9 @@ void IPFPmin(double* x, const costMat& delta){
     //printMat(delta.cost, delta.d_n, 1, "delta_cost");
     //printMat(mat_cost, delta.d_n, 1, "mult_cost");
     int it = 0;
-    while (true){
+    while (true) {
         printf("it%d\n", ++it);
-        solveLSAPE(mat_cost, delta.c_n-1, delta.c_m-1, b);
+        solveLSAPE(mat_cost, delta.c_n - 1, delta.c_m - 1, b);
 
         //printMat(b, delta.c_n, delta.c_m, "mat b");
 
@@ -44,7 +44,6 @@ void IPFPmin(double* x, const costMat& delta){
         printf("%f\n", sub_norm_inf);
 
 
-
         if (vecEq(x, x_k, delta.d_n))
             break;
         if (clock() - clk > 1000 * CLOCKS_PER_SEC)
@@ -53,18 +52,18 @@ void IPFPmin(double* x, const costMat& delta){
         // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
         matMulVec(delta.mat_d, x, mult_x_d, delta.d_n, delta.d_n);
         matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
-        memcpy(x_k, x, delta.d_n*sizeof(double));
+        memcpy(x_k, x, delta.d_n * sizeof(double));
 
 
     }
 
-    if (!vecEq(x, b, delta.d_n)){
+    if (!vecEq(x, b, delta.d_n)) {
         // use transpose
         // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
         matMulVec(delta.mat_d, x, mult_x_d, delta.d_n, delta.d_n);
         matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
-        solveLSAPE(mat_cost, delta.c_n-1, delta.c_m-1, b);
-        for (int i=0; i<delta.d_n; i++)
+        solveLSAPE(mat_cost, delta.c_n - 1, delta.c_m - 1, b);
+        for (int i = 0; i < delta.d_n; i++)
             x[i] = b[i];
     }
 

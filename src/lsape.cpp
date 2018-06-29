@@ -68,7 +68,8 @@ augmentCol(int k, double *cost, const int *rho, const int *varrho,
 
     while (true) {
         // SV <- SV + {j}
-        *SVptr = j; *(++SVptr) = -1;
+        *SVptr = j;
+        *(++SVptr) = -1;
 
         if (varrho[j] < n && cost[n * mcols + j] == v[j]) {
             zi = n;
@@ -169,7 +170,8 @@ augmentRow(int k, double *cost, const int *rho, const int *varrho,
 
     while (true) {
         // SU <- SU + {i}
-        *SUptr = i; *(++SUptr) = -1;
+        *SUptr = i;
+        *(++SUptr) = -1;
 
         if (rho[i] < m && cost[i * mcols + m] == u[m]) {
             zi = i;

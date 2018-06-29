@@ -6,12 +6,12 @@
 //
 //
 
-#ifndef quadratic_hpp
-#define quadratic_hpp
+#ifndef QUADRATIC_HPP
+#define QUADRATIC_HPP
 
 #include <stdio.h>
 #include "genCost.hpp"
 
-void solveQuadratic(const costMat& c, double* x, int* b, double& s_k, double& l, double* mult_x_d);
+void solveQuadratic(const costMat &c, double *x, int *b, double &s_k, double &l, double *mult_x_d);
 
-#endif /* quadratic_hpp */
+#endif //QUADRATIC_HPP
