@@ -17,8 +17,10 @@ int cvd=4, ced=2, cvs=2, ces=1;
 //        filename2[]="../gdc-c1/alkane/molecule003.gxl";
 //char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3875.gxl",
 //        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3419.gxl";
-char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_664.gxl",
-        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_2876.gxl";
+//char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3225.gxl",
+//        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3131.gxl";
+char filename1[]="../gdc-c1/mao/molecule18.gxl",
+        filename2[]="../gdc-c1/mao/molecule63.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
@@ -134,6 +136,16 @@ void randomInit(double *x, int c_n, int c_m, int max_row_sample_times, int max_c
     x[c_n * c_m - 1] = true;
 }
 
+void writeMatrix(char *name, void *x, size_t size, size_t count) {
+    FILE *f = fopen(name, "wb");
+    fwrite(x, size, count, f);
+}
+
+void readMatrix(char *name, void *x, size_t size, size_t count) {
+    FILE *f = fopen(name, "rb");
+    fread(x, size, count, f);
+}
+
 
 int main()
 {
@@ -158,8 +170,9 @@ int main()
    	}
    	x[delta.c_n*delta.c_m-1]=1;*/
     randomInit(x, delta.c_n, delta.c_m, delta.c_n, delta.c_m, 10000);
-
+    //readMatrix("mat", x, sizeof(double), delta.d_n);
     //printMat(x, delta.c_n, delta.c_m, "mat x");
+    writeMatrix("mat_1", x, sizeof(double), delta.d_n);
 
     IPFPmin(x, delta);
 
@@ -167,7 +180,5 @@ int main()
 
     printf("%f\n", compute_cost(x, delta));
 
-
-
-
+    writeMatrix("mat", x, sizeof(double), delta.d_n);
 }
