@@ -29,7 +29,6 @@ void matMulVec(double *__restrict A, int *__restrict b, double *__restrict c, in
 inline
 void vecMulMat(double *__restrict b, double *__restrict A, double *__restrict c, int n, int m) {
     memset(c, 0, n * sizeof(double));
-#pragma omp parallel for
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
             c[j] += b[i] * A[i * m + j];
