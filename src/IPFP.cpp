@@ -29,19 +29,22 @@ void IPFPmin(double *x, const costMat &delta) {
     //printMat(mat_cost, delta.d_n, 1, "mult_cost");
     int it = 0;
     while (true) {
+#ifdef DEBUG
         printf("it%d\n", ++it);
+#endif
         solveLSAPE(mat_cost, delta.c_n - 1, delta.c_m - 1, b);
 
         //printMat(b, delta.c_n, delta.c_m, "mat b");
 
         solveQuadratic(delta, x, b, s_k, l, mult_x_d);
 
-
+#ifdef DEBUG
         matSub(x, x_k, 1, delta.d_n, mat_sub);
         //double sub_norm = vecNorm(mat_sub, delta.d_n);
         double sub_norm_inf = vecInfNorm(mat_sub, delta.d_n);
         //printf("%f\n", sub_norm);
         printf("%f\n", sub_norm_inf);
+#endif
 
 
         if (vecEq(x, x_k, delta.d_n))

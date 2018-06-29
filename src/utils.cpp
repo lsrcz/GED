@@ -60,3 +60,18 @@ void readMatrix(char *name, void *x, size_t size, size_t count) {
     fread(x, size, count, f);
     fclose(f);
 }
+
+void printAnswer(int sol, double time, double *x, int n, int m) {
+    printf("%d;", sol);
+    printf("%f;", time);
+    for (int i = 0; i < n; ++i) {
+        if (i != 0)
+            printf(" ");
+        for (int j = 0; j < m; ++j) {
+            if (doubleeq(x[i * (m + 1) + j], 1)) {
+                printf("%d", j + 1);
+            }
+        }
+    };
+    printf("\n");
+}

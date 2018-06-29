@@ -19,4 +19,6 @@ void writeMatrix(char *name, void *x, size_t size, size_t count);
 
 void readMatrix(char *name, void *x, size_t size, size_t count);
 
+void printAnswer(int sol, double time, double *x, int n, int m);
+
 #endif //GED_UTILS_H
