@@ -118,7 +118,7 @@ bool vecEq(double * __restrict a, double * __restrict b, int len) {
 inline
 bool vecEq(double * __restrict a, int * __restrict b, int len) {
     for (int i = 0; i < len; ++i) {
-        if (!doubleeq(a[i], (double)b[i]))
+        if (!doubleeq(a[i], (double)b[i], 1e-3))
             return false;
     }
     return true;

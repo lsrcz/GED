@@ -13,14 +13,15 @@
 #define MAX_NODE 75
 #define MAX_DSIZE 5600
 int cvd=4, ced=2, cvs=2, ces=1;
-char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3875.gxl",
-        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3419.gxl";
+char filename1[]="../gdc-c1/alkane/molecule001.gxl",
+        filename2[]="../gdc-c1/alkane/molecule091.gxl";
 //char filename1[]="../gdc-c1/alkane/molecule003.gxl",
 //        filename2[]="../gdc-c1/alkane/molecule004.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
 void IPFPmin(double* x, const costMat& delta){
+    auto clk = clock();
     double* mult_x_d = new double[delta.d_n];
     double* mat_cost = new double[delta.d_n];
     int* b = new int[delta.d_n];
@@ -32,22 +33,26 @@ void IPFPmin(double* x, const costMat& delta){
 
     double s_k = dot(mat_cost, x, delta.d_n);
     double l = dot(delta.cost, x, delta.d_n);
-    printMat(mult_x_d, delta.d_n, 1, "mult_x_d");
-    printMat(delta.cost, delta.d_n, 1, "delta_cost");
-    printMat(mat_cost, delta.d_n, 1, "mult_cost");
+    //printMat(mult_x_d, delta.d_n, 1, "mult_x_d");
+    //printMat(delta.cost, delta.d_n, 1, "delta_cost");
+    //printMat(mat_cost, delta.d_n, 1, "mult_cost");
+    int it = 0;
     while (true){
+        printf("it%d\n", ++it);
       solveLSAPE(mat_cost, delta.c_n-1, delta.c_m-1, b);
 
-      printMat(b, delta.c_n, delta.c_m, "mat b");
+      //printMat(b, delta.c_n, delta.c_m, "mat b");
 
       solveQuadratic(delta, x, b, s_k, l, mult_x_d);
       if (vecEq(x, x_k, delta.d_n))
         break;
+      if (clock() - clk > 10 * CLOCKS_PER_SEC)
+          break;
       vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
       matAdd(mult_x_d, delta.cost, delta.d_n, 1, mat_cost);
       memcpy(x_k, x, delta.d_n*sizeof(double));
 
-      printMat(x, delta.c_n, delta.c_m, "mat x");
+
     }
 
     if (!vecEq(x, b, delta.d_n)){
@@ -122,9 +127,9 @@ int main()
     //cin>>cvd>>ced>>cvs>>ces;
     chemgraph g1=chemgraph(filename1), g2=chemgraph(filename2);
     costMat delta(cvd, ced, cvs, ces, g1, g2);
-    g1.printchem(), g2.printchem();
-    delta.printCost();
-    delta.printDelta();
+    //g1.printchem(), g2.printchem();
+    //delta.printCost();
+    //delta.printDelta();
     double* x = (double*)calloc(delta.d_n, sizeof(double));
 
     /*
@@ -139,13 +144,13 @@ int main()
    			x[(delta.c_n-1)*delta.c_m+i]=1;
    	}
    	x[delta.c_n*delta.c_m-1]=1;*/
-    randomInit(x, delta.c_n, delta.c_m, delta.c_n * 5, delta.c_m * 5, 10000);
+    randomInit(x, delta.c_n, delta.c_m, delta.c_n, delta.c_m, 10000);
 
-    printMat(x, delta.c_n, delta.c_m, "mat x");
+    //printMat(x, delta.c_n, delta.c_m, "mat x");
 
     IPFPmin(x, delta);
 
-    printMat(x, delta.c_n, delta.c_m, "mat x");
+    //printMat(x, delta.c_n, delta.c_m, "mat x");
 
     printf("%f\n", compute_cost(x, delta));
 
