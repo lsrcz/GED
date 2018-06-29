@@ -32,7 +32,7 @@ void costMat::getDelta(chemgraph g1, chemgraph g2){
         for (int k=0; k<c_m; k++){
             for (int j=0; j<c_n; j++){
                 for (int l=0; l<c_m; l++){
-                    if (i==j||k==l||(g1.g[i][j]==0&&g2.g[k][l]==0))
+                    if ((i==j&&i!=c_n-1)||(k==l&&k!=c_m-1)||(g1.g[i][j]==0&&g2.g[k][l]==0))
                         continue;
                     
                     if (g1.g[i][j]!=0&&g2.g[k][l]!=0){
