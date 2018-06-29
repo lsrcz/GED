@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
-#include "input.hpp"
+#include "chemgraph.hpp"
 
 #define MAX_NODE 75
 #define MAX_DSIZE 5600
