@@ -9,6 +9,8 @@
 #include "genCost.hpp"
 #include "stdio.h"
 #include <algorithm>
+#include <matop.hpp>
+
 using std::min;
 
 int costMat::computecord(int i, int k, int n){return i*n+k;}
@@ -79,4 +81,17 @@ void costMat::printDelta(){
         printf("\n");
     }
     printf("\n");
+}
+
+double costMat::computeCost(double *x) {
+    double* delta_hat = new double[d_n * d_n];
+    double* mult_x_deltahat = new double[d_n];
+    memcpy(delta_hat, mat_delta, d_n*d_n*sizeof(double));
+    for (int i=0; i<d_n; i++)
+        delta_hat[i*d_n+i] = cost[i];
+    vecMulMat(x, delta_hat, mult_x_deltahat, d_n, d_n);
+    double ret = dot(mult_x_deltahat, x, d_n);
+    delete[] delta_hat;
+    delete[] mult_x_deltahat;
+    return ret;
 }

@@ -47,6 +47,7 @@ public:
 
     void printCost();
     void printDelta();
+    double computeCost(double *x);
     
     
 private:

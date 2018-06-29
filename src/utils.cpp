@@ -48,3 +48,15 @@ void printAssignment(double *x, int n, int m) {
         }
     }
 }
+
+void writeMatrix(char *name, void *x, size_t size, size_t count) {
+    FILE *f = fopen(name, "wb");
+    fwrite(x, size, count, f);
+    fclose(f);
+}
+
+void readMatrix(char *name, void *x, size_t size, size_t count) {
+    FILE *f = fopen(name, "rb");
+    fread(x, size, count, f);
+    fclose(f);
+}

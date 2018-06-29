@@ -15,4 +15,8 @@ bool doubleeq(double u, double v, double epsilon=1e-6);
 
 void printAssignment(double *x, int n, int m);
 
+void writeMatrix(char *name, void *x, size_t size, size_t count);
+
+void readMatrix(char *name, void *x, size_t size, size_t count);
+
 #endif //GED_UTILS_H
