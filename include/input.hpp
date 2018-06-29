@@ -24,6 +24,8 @@ public:
 	int g[MAX_NODE][MAX_NODE];
 	int node[MAX_NODE];
 	int node_cnt;
+	bool muta;
+	int node_with_H[MAX_NODE];
 
 private:
 	int match_ele(const char atom[]);

@@ -12,7 +12,6 @@ int chemgraph::ele_cnt=0;
 
 int chemgraph::match_ele(const char atom[]){
 	string tmp=atom;
-	//cout<<tmp<<endl;
 	map <string, int>::iterator it=ele.find(tmp);
 	if (it!=ele.end())
 		return it->second;
@@ -24,7 +23,7 @@ void s_strncpy(char *dst, char *src, int len){strncpy(dst, src, len); dst[len]='
 
 chemgraph::chemgraph(char filename[])
 {
-	bool flag=false;
+	bool muta=false;
 	FILE *pfile;
 	char buffer[200], str1[3];
 	char *pstr, *tmp;
@@ -37,10 +36,10 @@ chemgraph::chemgraph(char filename[])
 	if (pfile == NULL) {perror ("Error opening file");	return;}
 	while (fgets(buffer, 200, pfile), buffer[1]!='n');
 	pstr=strchr(buffer, '\"');
-	if (pstr[1]!='_') flag=true;
+	if (pstr[1]!='_') muta=true;
 	
 	do{
-		if (flag){
+		if (muta){
 			pstr=strchr(buffer, '>');
 			pstr=strchr(pstr+1, '>');
 			pstr=strchr(pstr+1, '>');
@@ -66,7 +65,7 @@ chemgraph::chemgraph(char filename[])
 
 
 	do{
-		if (flag){
+		if (muta){
 			pstr=strchr(buffer, '\"');
 			tmp=strchr(pstr+1, '\"');
 			s_strncpy(str1, pstr+1, tmp-pstr-1);
@@ -97,6 +96,50 @@ chemgraph::chemgraph(char filename[])
 			fgets(buffer, 200, pfile);
 		}
 	}while (fgets(buffer, 200, pfile), buffer[1]=='e');
+
+	if (muta){
+		map <string, int>::iterator it=ele.find("H");
+		if (it==ele.end()){
+			muta = false;
+			return;
+		}
+		int H_num = it->second;
+		int node_cnt_new = 0;
+		int node_new[MAX_NODE];
+		int graph_new[MAX_NODE][MAX_NODE];
+		memset(node_with_H, 0, sizeof(node_with_H));
+		memset(graph_new, 0, sizeof(graph_new));
+		for (int i = 0; i<node_cnt; i++)
+			if (node[i]!=H_num){
+				node_new[node_cnt_new] = node[i];
+				node_cnt_new++;
+			}
+		int tmp_node = 0;
+		for (int i=0; i<node_cnt; i++){
+			if (node[i]==H_num)
+				continue;
+			int tmp_node_cnt = 0;
+			for (int j=0; j<node_cnt; j++){
+				if (node[i]==H_num && g[i][j]>0){
+					node_with_H[tmp_node]++;
+				}
+				else{
+					graph_new[tmp_node][tmp_node_cnt]=g[i][j];
+					tmp_node_cnt++;
+				}
+			}
+			tmp_node++;
+		}
+
+		node_cnt = node_cnt_new;
+		memset(node, 0, sizeof(node));
+		memset(g, 0, sizeof(g));
+		for (int i=0; i<node_cnt; i++){
+			node[i] = node_new[i];
+			for (int j=0; j<node_cnt; j++)
+				g[i][j]=graph_new[i][j];
+		}
+	}
 }
 
 void chemgraph::printchem(){
