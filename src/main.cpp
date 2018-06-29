@@ -6,7 +6,6 @@
 #include "utils.hpp"
 #include "IPFP.hpp"
 #include "init.hpp"
-//#include <omp.h>
 #include <cstring>
 #include <ctime>
 #include <algorithm>
@@ -14,22 +13,6 @@
 #include "matop.hpp"
 
 #define MAX_NODE 75
-#define MAX_DSIZE 5600
-int cvd = 4, ced = 2, cvs = 2, ces = 1;
-//char filename1[]="../gdc-c1/alkane/molecule002.gxl",
-//        filename2[]="../gdc-c1/alkane/molecule003.gxl";
-//char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3875.gxl",
-//        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3419.gxl";
-//char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_2876.gxl",
-//        filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3990.gxl";
-//char filename1[] = "../gdc-c1/MUTA-GED/Mutagenicity/molecule_42.gxl",
-//        filename2[] = "../gdc-c1/MUTA-GED/Mutagenicity/molecule_4018.gxl";
-char filename1[] = "../gdc-c1/MUTA-GED/Mutagenicity/molecule_3225.gxl",
-        filename2[] = "../gdc-c1/MUTA-GED/Mutagenicity/molecule_3131.gxl";
-//char filename1[]="../gdc-c1/mao/molecule18.gxl",
-//        filename2[]="../gdc-c1/mao/molecule63.gxl";
-//chemgraph g1, g2;
-//costMat delta;
 
 struct params {
     int cvs;
@@ -83,6 +66,4 @@ int main(int argc, char *argv[]) {
 
     double running_time = (double)(clock() - start) / CLOCKS_PER_SEC;
     printAnswer((int)delta.computeCost(x), running_time, x, delta.c_n - 1, delta.c_m - 1);
-
-    //writeMatrix("mat", x, sizeof(double), delta.d_n);
 }
