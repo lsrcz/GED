@@ -139,11 +139,13 @@ void randomInit(double *x, int c_n, int c_m, int max_row_sample_times, int max_c
 void writeMatrix(char *name, void *x, size_t size, size_t count) {
     FILE *f = fopen(name, "wb");
     fwrite(x, size, count, f);
+    fclose(f);
 }
 
 void readMatrix(char *name, void *x, size_t size, size_t count) {
     FILE *f = fopen(name, "rb");
     fread(x, size, count, f);
+    fclose(f);
 }
 
 
@@ -169,10 +171,10 @@ int main()
    			x[(delta.c_n-1)*delta.c_m+i]=1;
    	}
    	x[delta.c_n*delta.c_m-1]=1;*/
+    assert(delta.c_n * delta.c_m == delta.d_n);
     randomInit(x, delta.c_n, delta.c_m, delta.c_n, delta.c_m, 10000);
-    //readMatrix("mat", x, sizeof(double), delta.d_n);
-    //printMat(x, delta.c_n, delta.c_m, "mat x");
-    writeMatrix("mat_1", x, sizeof(double), delta.d_n);
+    readMatrix("mat_1", x, sizeof(double), delta.d_n);
+    //writeMatrix("mat_1", x, sizeof(double), delta.d_n);
 
     IPFPmin(x, delta);
 
