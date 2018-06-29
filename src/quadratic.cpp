@@ -25,8 +25,14 @@ void solveQuadratic(const costMat& c, double* x, int* b, double& s_k, double& l,
 	double beta = s_b + s_k - r_b - l;
 	double t_0 = - alpha / (2*beta);
 
+	/*
 	printf("t_0: %f\n", t_0);
 	printf("beta: %f\n", beta);
+	printf("alpha: %f\n", alpha);
+	printf("r_b: %f\n", r_b);
+	printf("s_k: %f\n", s_k);
+	printf("l: %f\n", l);
+	printf("s_b: %f\n", s_b);*/
 
 	if (beta <= 0 || t_0 >= 1){
 		for (int i=0; i<c.d_n; i++)

@@ -46,6 +46,8 @@ int dot(int * __restrict a, int * __restrict b, int len);
 inline
 bool vecEq(double * __restrict a, double * __restrict b, int len);
 
+bool vecEq(double * __restrict a, int * __restrict b, int len);
+
 #include "matop.inl"
 
 #endif //GED_MATOP_H

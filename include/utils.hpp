@@ -9,6 +9,8 @@
 
 void printMat(double *mat, int r, int c, const std::string &name);
 
+void printMat(int *mat, int r, int c, const std::string &name);
+
 bool doubleeq(double u, double v, double epsilon=1e-6);
 
 #endif //GED_UTILS_H

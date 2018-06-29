@@ -11,4 +11,4 @@ endif ()
 
 include_directories(include)
 add_executable(GED src/main.cpp src/input.cpp src/lsap.cpp src/quadratic.cpp src/lsape.cpp include/lsape.hpp include/matop.inl include/matop.hpp src/genCost.cpp src/utils.cpp include/utils.hpp)
-add_executable(test_lsape src/lsape.cpp include/lsape.hpp test/test_lsape.cpp src/lsap.cpp include/lsap.hpp)
+add_executable(test_lsape src/lsape.cpp include/lsape.hpp test/test_lsape.cpp src/lsap.cpp include/lsap.hpp src/utils.cpp include/utils.hpp)
