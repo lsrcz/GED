@@ -64,7 +64,7 @@ void matAdd(double * __restrict A, double * __restrict B, int n, int m, double *
 #pragma omp parallel for
     for (int i = 0; i < n ; ++i) {
         for (int j = 0; j < m; ++j) {
-            output[i * n + m] = A[i * n + m] + B[i * n + m];
+            output[i * m + j] = A[i * m + j] + B[i * m + j];
         }
     }
 }

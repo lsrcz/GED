@@ -15,6 +15,8 @@
 int cvd=4, ced=2, cvs=2, ces=1;
 char filename1[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3875.gxl",
         filename2[]="../gdc-c1/MUTA-GED/Mutagenicity/molecule_3419.gxl";
+//char filename1[]="../gdc-c1/alkane/molecule003.gxl",
+//        filename2[]="../gdc-c1/alkane/molecule004.gxl";
 //chemgraph g1, g2;
 //costMat delta;
 
@@ -30,6 +32,9 @@ void IPFPmin(double* x, const costMat& delta){
 
     double s_k = dot(mat_cost, x, delta.d_n);
     double l = dot(delta.cost, x, delta.d_n);
+    printMat(mult_x_d, delta.d_n, 1, "mult_x_d");
+    printMat(delta.cost, delta.d_n, 1, "delta_cost");
+    printMat(mat_cost, delta.d_n, 1, "mult_cost");
     while (true){
       solveLSAPE(mat_cost, delta.c_n-1, delta.c_m-1, b);
 
