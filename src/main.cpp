@@ -1,6 +1,6 @@
 #include <iostream>
-#include "input.hpp"
-#include "genCost.hpp"
+#include "chemgraph.hpp"
+#include "costMat.hpp"
 #include "quadratic.hpp"
 #include "lsape.hpp"
 #include "utils.hpp"

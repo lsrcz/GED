@@ -11,7 +11,7 @@
 #include <cstring>
 #include <cstdlib>
 #include "matop.hpp"
-#include "genCost.hpp"
+#include "costMat.hpp"
 
 void solveQuadratic(const costMat &c, double *x, int *b, double &s_k, double &l, double *mult_x_d) {
     auto mult_delta_b = (double *) calloc(c.d_n, sizeof(double));

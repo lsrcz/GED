@@ -34,4 +34,4 @@
 cmake-build-*/
 .idea/
 gdc-c1/
-.DS_Store
+*/.DS_Store

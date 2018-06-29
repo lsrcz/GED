@@ -49,7 +49,7 @@ void IPFPmin(double *x, const costMat &delta) {
 
         if (vecEq(x, x_k, delta.d_n))
             break;
-        if (clock() - clk > 1000 * CLOCKS_PER_SEC)
+        if (clock() - clk > 30 * CLOCKS_PER_SEC)
             break;
         // use transpose
         // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
