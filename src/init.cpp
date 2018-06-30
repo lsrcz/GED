@@ -35,12 +35,12 @@ void randomInit(double *x, int c_n, int c_m, int max_row_sample_times, int max_c
         if (assigned_times == max_assign_times)
             break;
     }
-    for (int i = 0; i < c_m; ++i) {
+    for (int i = 0; i < c_m - 1; ++i) {
         if (col_assigned[i])
             continue;
         x[(c_n - 1) * c_m + i] = true;
     }
-    for (int i = 0; i < c_n; ++i) {
+    for (int i = 0; i < c_n - 1; ++i) {
         if (row_assigned[i])
             continue;
         x[(i + 1) * c_m - 1] = true;

@@ -295,7 +295,7 @@ hungarianLSAPE(double *cost, int n, int m, int *rho, int *varrho, double *u, dou
         auto SU = new int[nrows];
         auto pi = new double[m];
         auto pred = new int[m];
-        for (int k = 0; k < m; ++k) {
+        for (int k = 0; k < n; ++k) {
             if (rho[k] == -1) {
                 int i, j;
                 augmentRow(k, cost, rho, varrho, V, SU, pred, pi, i, j, u, v, n, m);

@@ -1,4 +1,4 @@
-#include "input.hpp"
+#include "chemgraph.hpp"
 #include <string>
 #include <cstring>
 #include <cstdlib>

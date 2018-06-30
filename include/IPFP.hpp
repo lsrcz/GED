@@ -5,7 +5,7 @@
 #ifndef GED_IPFP_HPP
 #define GED_IPFP_HPP
 
-#include "genCost.hpp"
+#include "costMat.hpp"
 
 void IPFPmin(double *x, const costMat &delta);
 

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
-#include "input.hpp"
+#include "chemgraph.hpp"
 
 #define MAX_NODE 75
 #define MAX_DSIZE 5600
@@ -28,7 +28,7 @@ public:
 
     costMat() {}
 
-    costMat(int _cvd, int _ced, int _cvs, int _ces, chemgraph g1, chemgraph g2) : cvd(_cvd), ced(_ced), cvs(_cvs),
+    costMat(int _cvd, int _ced, int _cvs, int _ces, const chemgraph &g1, const chemgraph &g2) : cvd(_cvd), ced(_ced), cvs(_cvs),
                                                                                   ces(_ces) {
         //memset(mat_delta, 0, sizeof(mat_delta));
         c_n = g1.node_cnt + 1, c_m = g2.node_cnt + 1;
@@ -58,9 +58,9 @@ public:
 private:
     int computecord(int i, int k, int node_cnt);
 
-    void getDelta(chemgraph g1, chemgraph g2);
+    void getDelta(const chemgraph &g1, const chemgraph &g2);
 
-    void getCost(chemgraph g1, chemgraph g2);
+    void getCost(const chemgraph &g1, const chemgraph &g2);
 };
 
 #endif //GENCOST_HPP

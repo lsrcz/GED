@@ -9,13 +9,13 @@
 #include <cstdio>
 #include <algorithm>
 #include "matop.hpp"
-#include "genCost.hpp"
+#include "costMat.hpp"
 
 using std::min;
 
 int costMat::computecord(int i, int k, int n) { return i * n + k; }
 
-void costMat::getCost(chemgraph g1, chemgraph g2) {
+void costMat::getCost(const chemgraph &g1, const chemgraph &g2) {
     //n_c=g1.node_cnt+1, c_m=g2.node_cnt+1;
     for (int i = 0; i < c_n; i++) {
         for (int j = 0; j < c_m; j++) {
@@ -28,7 +28,7 @@ void costMat::getCost(chemgraph g1, chemgraph g2) {
     }
 }
 
-void costMat::getDelta(chemgraph g1, chemgraph g2) {
+void costMat::getDelta(const chemgraph &g1, const chemgraph &g2) {
     for (int i = 0; i < c_n; i++) {
         for (int k = 0; k < c_m; k++) {
             for (int j = 0; j < c_n; j++) {
