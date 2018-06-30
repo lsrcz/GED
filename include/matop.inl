@@ -5,6 +5,20 @@
 #include "utils.hpp"
 
 inline
+void matMulMat(int *__restrict A, int *__restrict B, int n, int m, int r, int *__restrict output){
+    memset(output, 0, sizeof(output));
+    #pragma omp parallel for (int i = 0; i < n; ++i)
+    {
+        for (int j=0; j<r; j++){
+            int tmp = 0;
+            for (int k=0; k<m; k++)
+                tmp += A[i * m + k] * B[m * r + j];
+            output[i * r + j] = tmp;
+        }
+    }
+}
+
+inline
 void matMulVec(double *__restrict A, double *__restrict b, double *__restrict c, int n, int m) {
     memset(c, 0, n * sizeof(double));
 #pragma omp parallel for
