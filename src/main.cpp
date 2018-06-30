@@ -11,8 +11,12 @@
 #include <algorithm>
 #include <cstdlib>
 #include "matop.hpp"
+#include <chrono>
 
 #define MAX_NODE 75
+
+using std::chrono::high_resolution_clock;
+using std::chrono::milliseconds;
 
 struct params {
     int cvs;
@@ -33,6 +37,7 @@ struct params {
 };
 
 int main(int argc, char *argv[]) {
+    high_resolution_clock::time_point beginTime = high_resolution_clock::now();
     auto start = clock();
     if (argc < 7) {
         printf("missing arguments, expect 6\n");
@@ -64,6 +69,8 @@ int main(int argc, char *argv[]) {
     printf("%f\n", delta.computeCost(x));
 #endif
 
-    double running_time = (double)(clock() - start) / CLOCKS_PER_SEC;
+    high_resolution_clock::time_point endTime = high_resolution_clock::now();
+    milliseconds timeInterval = std::chrono::duration_cast<milliseconds>(endTime - beginTime);
+    double running_time = (double)(timeInterval.count()) / 1000;
     printAnswer((int)delta.computeCost(x), running_time, x, delta.c_n - 1, delta.c_m - 1);
 }

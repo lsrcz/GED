@@ -63,7 +63,7 @@ void readMatrix(char *name, void *x, size_t size, size_t count) {
 
 void printAnswer(int sol, double time, double *x, int n, int m) {
     printf("%d;", sol);
-    printf("%f;", time);
+    printf("%.3f;", time);
     for (int i = 0; i < n; ++i) {
         if (i != 0)
             printf(" ");

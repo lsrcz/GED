@@ -6,10 +6,14 @@
 #include "matop.hpp"
 #include "lsape.hpp"
 #include "quadratic.hpp"
+#include <chrono>
+
+using std::chrono::high_resolution_clock;
+using std::chrono::milliseconds;
 
 
 void IPFPmin(double *x, const costMat &delta) {
-    auto clk = clock();
+    auto beginTime = high_resolution_clock::now();
     auto mult_x_d = new double[delta.d_n];
     auto mat_cost = new double[delta.d_n];
     auto b = new int[delta.d_n];
@@ -49,7 +53,9 @@ void IPFPmin(double *x, const costMat &delta) {
 
         if (vecEq(x, x_k, delta.d_n))
             break;
-        if (clock() - clk > 30 * CLOCKS_PER_SEC)
+        auto endTime = high_resolution_clock::now();
+        milliseconds timeInterval = std::chrono::duration_cast<milliseconds>(endTime - beginTime);
+        if (timeInterval.count() > 5000)
             break;
         // use transpose
         // vecMulMat(x, delta.mat_d, mult_x_d, delta.d_n, delta.d_n);
