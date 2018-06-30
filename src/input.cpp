@@ -57,7 +57,8 @@ chemgraph::chemgraph(char filename[]) {
             pstr = strchr(pstr + 1, '>');
             tmp = strchr(pstr, '<');
             s_strncpy(str1, pstr + 1, tmp - pstr - 1);
-            node[cnt++] = atoi(str1);
+            //node[cnt++] = atoi(str1);
+            node[cnt++] = match_ele(str1);
             fgets(buffer, 200, pfile);
         }
     } while (fgets(buffer, 200, pfile), buffer[1] == 'n');
@@ -107,6 +108,17 @@ chemgraph::chemgraph(char filename[]) {
 
     if (node_cnt < 40)
         muta = false;
+    
+}
+
+void chemgraph::graph_for_matching(){
+    graph_new = new int[node_cnt*node_cnt];
+    for (int i=0; i<node_cnt; i++)
+        for (int j=0; j<node_cnt; j++){
+            graph_new[i*node_cnt+j] = g[i][j];
+        }
+    for (int i=0; i<node_cnt; i++)
+        graph_new[i*node_cnt+i] = node[i];
 }
 
 void chemgraph::muta_avoid_H() {
