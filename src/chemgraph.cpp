@@ -112,13 +112,14 @@ chemgraph::chemgraph(char filename[]) {
 }
 
 void chemgraph::graph_for_matching(){
-    graph_new = new int[node_cnt*node_cnt];
+    auto graph_new = new int[node_cnt*node_cnt];
     for (int i=0; i<node_cnt; i++)
         for (int j=0; j<node_cnt; j++){
             graph_new[i*node_cnt+j] = g[i][j];
         }
     for (int i=0; i<node_cnt; i++)
         graph_new[i*node_cnt+i] = node[i];
+    return graph_new;
 }
 
 void chemgraph::muta_avoid_H() {

@@ -1,12 +1,12 @@
 //
-//  input.hpp
+//  chemgraph.hpp
 //
 //  Created by 吴怡凡 on 07/06/2018.
 //  Copyright © 2018 evan. All rights reserved.
 //
 
-#ifndef INPUT_HPP
-#define INPUT_HPP
+#ifndef CHEMGRAPH_HPP
+#define CHEMGRAPH_HPP
 
 #include <stdio.h>
 #include <string>
@@ -30,7 +30,6 @@ public:
     void graph_for_matching();
 
     int g[MAX_NODE][MAX_NODE];
-    int* graph_new;
     int node[MAX_NODE];
     int node_cnt;
     bool muta;
@@ -44,4 +43,4 @@ private:
 };
 
 
-#endif //INPUT_HPP
+#endif //CHEMGRAPH_HPP
