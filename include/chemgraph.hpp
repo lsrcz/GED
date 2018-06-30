@@ -27,7 +27,7 @@ public:
 
     void muta_avoid_H();
 
-    void graph_for_matching();
+    int *graph_for_matching();
 
     int g[MAX_NODE][MAX_NODE];
     int node[MAX_NODE];

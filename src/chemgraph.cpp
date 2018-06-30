@@ -111,7 +111,7 @@ chemgraph::chemgraph(char filename[]) {
     
 }
 
-void chemgraph::graph_for_matching(){
+int *chemgraph::graph_for_matching(){
     auto graph_new = new int[node_cnt*node_cnt];
     for (int i=0; i<node_cnt; i++)
         for (int j=0; j<node_cnt; j++){
